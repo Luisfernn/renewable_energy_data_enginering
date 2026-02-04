@@ -1,0 +1,30 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.egg-info/
+
+# Dados
+data/
+*.csv
+*.json
+*.parquet
+*.xlsx
+
+# Ambiente
+venv
+.env
+venv/
+env/
+ENV/
+.venv
+
+# Logs
+logs/
+*.log
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
