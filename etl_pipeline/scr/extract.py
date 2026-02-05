@@ -9,21 +9,28 @@ logger.propagate = False
 
 def extract_data(file_path: Path = None):
 
+    #path da pasta do projeto 
     base_dir = Path(__file__).resolve().parent
+ 
 
+    #verifica se o arquivo raw existe
     if file_path is None:
         file_path = base_dir / 'data' / 'raw' / 'renewable_energy_data_raw.xlsx'
 
     if not file_path.exists():
         logger.error(f"❌ Arquivo não encontrado: {file_path}")
         return None
+    
 
+    #lê o arquivo xlsx
     try:
         df = pd.read_excel(file_path, sheet_name='Country')
     except Exception as e:
         logger.error(f"⚠️ Erro ao ler o arquivo: {e}")
         return None
     
+
+    #transforma o arquivo xlsx em csv
     try:
         df.to_csv(base_dir / 'data' / 'raw' / 'renewable_energy_data.csv' , index=False, encoding='utf-8') 
     except Exception as e:
@@ -31,6 +38,7 @@ def extract_data(file_path: Path = None):
         return None
 
 
+    #normaliza colunas
     df.columns = (
         df.columns.str.strip()
                       .str.lower()
