@@ -37,4 +37,16 @@ def extract_data(file_path: Path = None):
                       .str.replace(r"[^a-z0-9]+", "_", regex=True)
                       .str.replace(r"_+", "_", regex=True)
                       .str.strip("_")
-    )       
+    )
+
+
+    logger.info(f"\n✅ Arquivo carregado com sucesso: {file_path.name}")
+    logger.info(f"📊 Linhas: {len(df)}, Colunas {len(df.columns)}\n")
+
+    logger.info("Prévia das 10 primeiras linhas:\n")
+    logger.info(f"{df.head(10)}\n")
+
+    logger.info("Prévia das últimas 10 linhas:\n")
+    loggerinfo(f"{df.tail(10)}\n")
+
+    return df
