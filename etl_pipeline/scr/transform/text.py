@@ -17,7 +17,7 @@ file_path = base_dir / 'data' / 'raw' / 'renewable_energy_data.csv'
 def normalize_columns_names(df = None):
     
     # se executada localmente (função) lê o arquivo csv para mostrar prév dos dados  
-    if df is none:
+    if df is None:
         try:
             df = pd.read_csv(file_path)
         except Exception as e:
