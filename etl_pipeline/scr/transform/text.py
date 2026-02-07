@@ -96,3 +96,4 @@ if __name__ == "__main__":
     logger.setLevel(logging.INFO) 
 
     normalize_columns_names()
+    cleaning_critic_colmuns()
