@@ -95,5 +95,5 @@ if __name__ == "__main__":
     logger.addHandler(handler)
     logger.setLevel(logging.INFO) 
 
-    normalize_columns_names()
-    cleaning_critic_colmuns()
+    df = normalize_columns_names()
+    df = cleaning_critic_colmuns(df)
