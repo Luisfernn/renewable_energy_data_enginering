@@ -60,6 +60,33 @@ def normalize_columns_names(df = None):
     return df
 
 
+def cleaning_critic_colmuns(df= None)
+
+    # remove linhas que os valores das colunas críticas não estão preenchidos, já que sem eles os dados não tem valor algum 
+
+    if df is None:
+        try:
+            df = pd.read_csv(file_path)
+        except Exception as e:
+            logger.error(f"❌ Arquivo não encontrado: {e}")
+
+
+    critic_columuns = ['country', 'year', 'technology' ]
+
+    before = len(df)
+
+    for col in critic_columuns:
+        null_before = df[col].isna().sum()
+        if null_before > 0:
+            print(f"⚠️ {null_before} registros sem '{col}' - removendo... ")
+            df = df.dropna(subset=[col])
+
+    after = len(df)
+    print(f"✅ Total removido: {before - after} registros")
+    print(f"✅ Mantidos: {after} registros com identificação completa") 
+
+    return df       
+
 # logger.info só funciona em execução local do script
 if __name__ == "__main__":
 
