@@ -79,7 +79,7 @@ def normalize_textual_columns(df = None):
            df[col] = df[col].str.strip().str.title()
 
     # código
-    df['iso3_code'] = df['iso3_code'].str.strip().upper()
+    df['iso3_code'] = df['iso3_code'].str.strip().str.upper()
 
     # categorias
     category_columns = ['renewable_or_not', 'group_technology', 'technology', 'sub_technology', 'producer_type']
