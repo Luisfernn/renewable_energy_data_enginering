@@ -74,7 +74,7 @@ def normalize_textual_columns(df = None):
 
     # nomes próprios
     locations_columns = ['region', 'sub_region', 'country'] 
-    for col in locals_columns:
+    for col in locations_columns:
         if col in df.columns:
            df[col] = df[col].str.strip().title()
 
