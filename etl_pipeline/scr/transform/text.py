@@ -87,8 +87,9 @@ def cleaning_critic_colmuns(df= None):
 
     print(df['technology'].unique())
 
-    return df       
+    return df 
 
+    
 # logger.info só funciona em execução local do script
 if __name__ == "__main__":
 
