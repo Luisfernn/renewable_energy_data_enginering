@@ -137,4 +137,5 @@ if __name__ == "__main__":
     logger.setLevel(logging.INFO) 
 
     df = normalize_columns_names()
+    df = normalize_textual_columns(df)
     df = clean_critic_colmuns(df)
