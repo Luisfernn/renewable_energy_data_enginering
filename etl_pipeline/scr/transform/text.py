@@ -95,6 +95,8 @@ def normalize_textual_columns(df = None):
                 .str.lower()
             ) 
                
+    return df           
+
 
 
 # remove linhas que os valores das colunas críticas não estão preenchidos
