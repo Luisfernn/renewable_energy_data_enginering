@@ -53,11 +53,11 @@ def normalize_columns_names(df = None):
 
 
     # prévia dos dados
-    logger.info("Prévia das 10 primeiras linhas:\n")
-    logger.info(f"{df.head(10)}\n")    
+    logger.debug("Prévia das 10 primeiras linhas:\n")
+    logger.debug(f"{df.head(10)}\n")    
 
-    logger.info("Prévia das últimas 10 linhas:\n")
-    logger.info(f"{df.tail(10)}")
+    logger.debug("Prévia das últimas 10 linhas:\n")
+    logger.debug(f"{df.tail(10)}")
 
     return df
 
