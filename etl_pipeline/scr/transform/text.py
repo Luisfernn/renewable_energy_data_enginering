@@ -97,6 +97,14 @@ def normalize_textual_columns(df = None):
                 .str.strip()
                 .str.lower()
             ) 
+
+    logger.debug("\nPrévia das 5 primeiras linhas:")
+    logger.debug(f"\n{df.head(5)}")
+    logger.debug("\nPrévia das últimas 5 linhas:")
+    logger.debug(f"\n{df.tail(5)}")
+
+    logger.info("\n✅ Normalização de dados de colunas textuais concluída")
+
                
     return df           
 
@@ -126,6 +134,13 @@ def clean_critic_colmuns(df= None):
     after = len(df)
     print(f"Total removido: {before - after} registros")
     print(f"Mantidos: {after} registros com identificação completa") 
+
+    logger.debug("\nPrévia das 5 primeiras linhas:")
+    logger.debug(f"\n{df.head(5)}")
+    logger.debug("\nPrévia das últimas 5 linhas:")
+    logger.debug(f"\n{df.tail(5)}")
+
+    logger.info("\n✅ Limpeza de registros que não tem dados nas colunas críticas concluída")
 
     return df 
 
