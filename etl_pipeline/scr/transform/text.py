@@ -52,7 +52,7 @@ def normalize_columns_names(df = None):
 
 
 
-    # prévia dos dados
+    logger.debug("\nnormalize_columns_names")
     logger.debug("Prévia das 10 primeiras linhas:\n")
     logger.debug(f"{df.head(10)}\n")    
 
@@ -98,6 +98,7 @@ def normalize_textual_columns(df = None):
                 .str.lower()
             ) 
 
+    logger.debug("\nnormalize_textual_columns")
     logger.debug("\nPrévia das 5 primeiras linhas:")
     logger.debug(f"\n{df.head(5)}")
     logger.debug("\nPrévia das últimas 5 linhas:")
@@ -135,6 +136,7 @@ def clean_critic_colmuns(df= None):
     print(f"Total removido: {before - after} registros")
     print(f"Mantidos: {after} registros com identificação completa") 
 
+     logger.debug("\nclean_critic_colmuns")
     logger.debug("\nPrévia das 5 primeiras linhas:")
     logger.debug(f"\n{df.head(5)}")
     logger.debug("\nPrévia das últimas 5 linhas:")
