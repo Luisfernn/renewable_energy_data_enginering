@@ -91,7 +91,7 @@ def normalize_textual_columns(df = None):
 
             df[col] = (
                 df[col]
-                .str.replace('[*()]', '', regex=True)
+                .str.replace('[*()-]', '', regex=True)
                 .str.replace(' excl. ', ' excluding ')
                 .str.strip()
                 .str.lower()
