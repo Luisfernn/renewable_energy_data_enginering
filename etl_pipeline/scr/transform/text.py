@@ -121,8 +121,8 @@ def clean_critic_colmuns(df= None):
 
 
     after = len(df)
-    print(f"✅ Total removido: {before - after} registros")
-    print(f"✅ Mantidos: {after} registros com identificação completa") 
+    print(f"Total removido: {before - after} registros")
+    print(f"Mantidos: {after} registros com identificação completa") 
 
     return df 
 
