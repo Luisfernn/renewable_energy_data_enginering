@@ -69,7 +69,7 @@ def apply_text_rules(df):
     for col in detail_col:
         if col in df.columns:
             df[col] = (df[col]
-                       .replace(tech_map)
+                       .replace(detail_col)
                        .str.replace('n.e.s.', '', regex=False)
                        .str.replace('energy', '', regex=False)
                        .str.replace('renewable ', '', regex=False)
