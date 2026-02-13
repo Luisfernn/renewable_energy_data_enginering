@@ -79,7 +79,7 @@ def apply_text_rules(df):
                        .str.replace('renewable ', '', regex=False)
                        .str.strip())
 
-    df.loc[df[col] == 'crops', col] = 'energy crops'
+            df.loc[df[col] == 'crops', col] = 'energy crops'
 
     return df                       
 
