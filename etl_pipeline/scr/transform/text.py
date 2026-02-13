@@ -62,15 +62,11 @@ def normalize_text_columns(df = None):
 
 def apply_text_rules(df):
 
-    tech_map = {
-        'other primary solid biofuels n.e.s.': 'other primary',
-        'other biogases from anaerobic fermentation': 'biogas anaerobic',
-        'total nonrenewable': 'nonrenewable',
-        'total renewable': 'renewable'
-    }
+    detail_col = ['technology', 'sub_technology']
 
+    group_col = ['group_technology']
 
-    for col in df['sub_technology'], df['renewable_or_not']:
+    for col in detail_col:
         if col in df.columns:
             df[col] = (df[col]
                        .replace(tech_map)
