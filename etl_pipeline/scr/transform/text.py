@@ -51,7 +51,6 @@ def normalize_columns_names(df = None):
     df = df.rename(columns=normalized_columns)
 
 
-
     logger.debug("\nnormalize_columns_names\n")
     logger.debug(f"\n{df.head(10)}\n")    
     logger.debug(f"\n{df.tail(10)}")
@@ -95,6 +94,7 @@ def normalize_textual_columns(df = None):
                 .str.lower()
             ) 
 
+
     logger.debug("\nnormalize_textual_columns\n")
     logger.debug(f"\n{df.head(5)}\n")
     logger.debug(f"\n{df.tail(5)}")
@@ -106,7 +106,6 @@ def normalize_textual_columns(df = None):
 
 
 
-# remove linhas que os valores das colunas críticas não estão preenchidos
 def clean_data(df= None):
 
     if df is None:
@@ -116,6 +115,7 @@ def clean_data(df= None):
             logger.error(f"❌ Arquivo não encontrado: {e}")
 
 
+ #remome linhas em registros nas colunas críticas
     critic_columuns = ['country', 'year', 'technology']
 
     before = len(df)
@@ -127,6 +127,7 @@ def clean_data(df= None):
             df = df.dropna(subset=[col])
 
 
+ #remove linhas com valor inválido na coluna region
     invalid_region = ['Unspecified Countries']
     mask = df['region'].isin(invalid_region)
     count = mask.sum()
@@ -138,6 +139,7 @@ def clean_data(df= None):
     after = len(df)
     print(f"Total removido: {before - after} registros")
     print(f"Mantidos: {after} registros com identificação completa") 
+
 
     logger.debug("\nclean_critic_colmuns\n")
     logger.debug(f"\n{df.head(5)}\n")
