@@ -127,11 +127,11 @@ def normalize_text_data(df = None):
                 .str.lower()
             ) 
 
-    cols_to_check = ['renewable_or_not', 'sub_technology']
+    cols_to_fix = ['renewable_or_not', 'sub_technology']
     
-    for col in cols_to_check:
+    for col in cols_to_fix:
         if col in df.columns:
-            df = df[~df[col].str.contains('total', case=False, na=False)]        
+            df[col] = df[col].str.replace('total ', '', regex=False).str.strip()      
 
 
     df = apply_text_rules(df)        
