@@ -166,4 +166,4 @@ if __name__ == "__main__":
 
     df = normalize_columns_names()
     df = normalize_textual_columns(df)
-    df = clean_critic_colmuns(df)
+    df = clean_data(df)
