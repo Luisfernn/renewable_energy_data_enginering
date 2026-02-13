@@ -77,6 +77,12 @@ def apply_text_rules(df):
 
             df.loc[df[col] == 'crops', col] = 'energy crops'
 
+
+    if 'group_technology' in df.columns:
+        df['group_technology'] = (df['group_technology']
+                                  .str.replace(' n.e.s.', '', regex=False)
+                                  .str.strip())        
+
     return df                       
 
 
