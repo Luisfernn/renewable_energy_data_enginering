@@ -130,6 +130,14 @@ def clean_data(df= None):
             print(f"⚠️ {null_before} registros sem '{col}' - removendo... ")
             df = df.dropna(subset=[col])
 
+    invalid_region = ['Unspecified Countries']
+
+    for col in invalid_region:
+        null_before = df[col].isna().sum()
+        if null_before > 0:
+            print(f"⚠️ {null_before} registros em {col} - removendo...")
+            df = df.dropna(subset=[col])        
+
 
     after = len(df)
     print(f"Total removido: {before - after} registros")
