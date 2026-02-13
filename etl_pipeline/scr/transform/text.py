@@ -60,6 +60,29 @@ def normalize_columns_names(df = None):
     return df
 
 
+def apply_rules(df):
+
+    tech_map = {
+        'other primary solid biofuels n.e.s.': 'other primary',
+        'other biogases from anaerobic fermentation': 'biogas anaerobic',
+        'total nonrenewable': 'nonrenewable',
+        'total renewable': 'renewable'
+    }
+
+
+    for col in df['sub_technology'], df['renewable_or_not']:
+        if col in tech_map:
+            df[col] = (df[col]
+                       .replace(tech_map)
+                       .str.replace('n.e.s.', '', regex=False)
+                       .str.replace('energy', '', regex=False)
+                       .str.replace('renewable ', '', regex=False)
+                       .str.strip())
+
+            df.loc[df[col] == 'crops', col] = 'energy crops'
+            
+    return df                       
+
 
 # normaliza dados de colunas textuais
 def normalize_textual_columns(df = None):
