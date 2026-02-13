@@ -188,5 +188,6 @@ if __name__ == "__main__":
     # logger.setLevel(logging.INFO) 
 
     df = normalize_text_columns()
+    df = apply_text_rules(df)
     df = normalize_text_data(df)
     df = clean_text_data(df)
