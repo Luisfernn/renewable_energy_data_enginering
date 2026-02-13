@@ -18,7 +18,7 @@ pd.set_option('display.max_columns', None)
 
 
 # normalização dos nomes das colunas
-def normalize_columns_names(df = None):
+def normalize_text_columns(df = None):
     
     # se executada localmente (função) lê o arquivo csv para mostrar prév dos dados  
     if df is None:
@@ -85,7 +85,7 @@ def apply_rules(df):
 
 
 # normaliza dados de colunas textuais
-def normalize_textual_columns(df = None):
+def normalize_text_data(df = None):
 
     if df is None:
         try:
@@ -131,7 +131,7 @@ def normalize_textual_columns(df = None):
 
 
 
-def clean_data(df= None):
+def clean_text_data(df= None):
 
     if df is None:
         try:
@@ -187,6 +187,6 @@ if __name__ == "__main__":
     logger.setLevel(logging.DEBUG)
     # logger.setLevel(logging.INFO) 
 
-    df = normalize_columns_names()
-    df = normalize_textual_columns(df)
-    df = clean_data(df)
+    df = normalize_text_columns()
+    df = normalize_text_data(df)
+    df = clean_text_data(df)
