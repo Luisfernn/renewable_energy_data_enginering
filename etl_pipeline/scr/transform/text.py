@@ -125,6 +125,8 @@ def clean_data(df= None):
         if null_before > 0:
             print(f"⚠️ {null_before} registros sem '{col}' - removendo... ")
             df = df.dropna(subset=[col])
+        else:
+            print("✅ Nenhum registro com valor nulo nas colunas críticas!")   
 
 
  #remove linhas com valor inválido na coluna region
