@@ -168,7 +168,6 @@ def clean_text_data(df= None):
         if null_before > 0:
             logger.info(f"⚠️ {null_before} registros sem '{col}' - removendo... ")
             df = df.dropna(subset=[col])
-        else:
             removed_any = True
 
     if not removed_any:
