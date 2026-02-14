@@ -178,6 +178,8 @@ def clean_text_data(df= None):
     if count > 0:
         logger.info(f"⚠️ {count} registros com região inválida - removendo...")
         df = df[~mask]
+    else:
+        logger.info(f"✅ Nenhum registro com valor inválido na coluna: {invalid_region}")
 
 
     after = len(df)
