@@ -165,10 +165,10 @@ def clean_text_data(df= None):
     for col in critic_columuns:
         null_before = df[col].isna().sum()
         if null_before > 0:
-            print(f"⚠️ {null_before} registros sem '{col}' - removendo... ")
+            logger.info(f"⚠️ {null_before} registros sem '{col}' - removendo... ")
             df = df.dropna(subset=[col])
         else:
-            print("✅ Nenhum registro com valor nulo nas colunas críticas!")   
+            logger.info("✅ Nenhum registro com valor nulo nas colunas críticas!")   
 
 
  #remove linhas com valor inválido na coluna country
@@ -176,7 +176,7 @@ def clean_text_data(df= None):
     mask = df['country'].isin(invalid_region)
     count = mask.sum()
     if count > 0:
-        print(f"⚠️ {count} registros com região inválida - removendo...")
+        logger.info(f"⚠️ {count} registros com região inválida - removendo...")
         df = df[~mask]
 
 
