@@ -179,10 +179,10 @@ def clean_text_data(df= None):
     mask = df['country'].isin(invalid_region)
     count = mask.sum()
     if count > 0:
-        logger.info(f"⚠️ {count} registros com região inválida - removendo...")
+        logger.info(f"⚠️  {count} registros com country inválido - removendo...")
         df = df[~mask]
     else:
-        logger.info(f"✅ Nenhum registro com valor inválido na coluna: {invalid_region}")
+        logger.info(f"✅ Nenhum registro com valor inválido na coluna country")
 
 
     after = len(df)
