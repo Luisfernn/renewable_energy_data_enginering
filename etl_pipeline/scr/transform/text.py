@@ -181,6 +181,7 @@ def clean_text_data(df= None):
     if count > 0:
         logger.info(f"⚠️  {count} registros com country inválido - removendo...")
         df = df[~mask]
+        logger.info("✅ Remoção concluída!")
     else:
         logger.info(f"✅ Nenhum registro com valor inválido na coluna country")
 
