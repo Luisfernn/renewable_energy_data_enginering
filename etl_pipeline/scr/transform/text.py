@@ -194,7 +194,7 @@ def clean_text_data(df= None):
     logger.debug(f"\n{df.head(5)}\n")
     logger.debug(f"\n{df.tail(5)}")
 
-    logger.info("\n✅ Limpeza de registros sem dados em colunas críticas concluída!")
+    logger.info("\n✅ Limpeza de dados concluída!")
 
     return df 
 
