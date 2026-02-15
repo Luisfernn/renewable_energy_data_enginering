@@ -10,8 +10,8 @@ logger.addHandler(logging.NullHandler())
 logger.propagate = False
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-FILE_PATH = base_dir / 'data' / 'raw' / 'renewable_energy_data.csv'
-PROCESSED_DIR = base_dir / 'data' / 'processed'
+FILE_PATH = BASE_DIR / 'data' / 'raw' / 'renewable_energy_data.csv'
+PROCESSED_DIR = BASE_DIR / 'data' / 'processed'
 OUTPUT_PATH = PROCESSED_DIR / 'renewable_energy_data_text.csv'
 
 # obriga o pandas a mostrar todas as colunas
