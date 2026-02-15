@@ -63,3 +63,19 @@ def fill_nan_numeric_data(df):
 
 
 df = df.dropna(subset=['year'])    
+
+
+
+def clean_numeric_data(df):
+
+    
+    before = len(df)
+
+    df = df.dropna(subset=metric_columns, how='all')
+
+    after = len(df)
+    removed = before - after
+
+    logger.info(f" Removidos {removed} registros sem nenhuma métrica\n")
+
+    return df
