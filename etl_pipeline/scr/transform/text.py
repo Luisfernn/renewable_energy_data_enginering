@@ -9,24 +9,17 @@ logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 logger.propagate = False
 
-base_dir = Path(__file__).resolve().parent.parent.parent
-file_path = base_dir / 'data' / 'raw' / 'renewable_energy_data.csv'
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+FILE_PATH = base_dir / 'data' / 'raw' / 'renewable_energy_data.csv'
+PROCESSED_DIR = base_dir / 'data' / 'processed'
+OUTPUT_PATH = PROCESSED_DIR / 'renewable_energy_data_text.csv'
 
 # obriga o pandas a mostrar todas as colunas
 pd.set_option('display.max_columns', None) 
 
 
-
 # normalização dos nomes das colunas
 def normalize_text_columns(df = None):
-    
-    # se executada localmente (função) lê o arquivo csv para mostrar prév dos dados  
-    if df is None:
-        try:
-            df = pd.read_csv(file_path)
-        except Exception as e:
-            logger.error(f"❌ Arquivo não encontrado: {e}")
-
 
     normalized_columns={
         'Region': 'region',
@@ -97,13 +90,6 @@ def apply_text_rules(df):
 # normaliza dados de colunas textuais
 def normalize_text_data(df = None):
 
-    if df is None:
-        try:
-            df = pd.read_csv(file_path)
-        except Exception as e:
-            logger.error(f"❌ Arquivo não encontrado: {e}")
-
-
     # nomes próprios
     locations_columns = ['region', 'sub_region', 'country'] 
     for col in locations_columns:
@@ -149,13 +135,6 @@ def normalize_text_data(df = None):
 
 
 def clean_text_data(df= None):
-
-    if df is None:
-        try:
-            df = pd.read_csv(file_path)
-        except Exception as e:
-            logger.error(f"❌ Arquivo não encontrado: {e}")
-
 
  #remove linhas em registros nas colunas críticas
     critic_columuns = ['country', 'year', 'technology']
@@ -210,6 +189,20 @@ if __name__ == "__main__":
     logger.setLevel(logging.DEBUG)
     # logger.setLevel(logging.INFO) 
 
+    logger.info("="*60)
+    logger.info("🚀 INICIANDO TRANSFORMAÇÕES TEXTUAIS")
+    logger.info("="*60 + "\n")
+
+    df = pd.read_csv(FILE_PATH)
+    logger.info(f"📊 Carregados {len(df) registros}\n")
+
     df = normalize_text_columns()
     df = normalize_text_data(df)
     df = clean_text_data(df)
+
+    df.to_csv(OUTPUT_DIR, index=False)
+    
+    logger.info("="*60)
+    logger.info("✅ TRANSFORMAÇÕES TEXTUAIS CONCLUÍDAS")
+    logger.info(f"📁 Salvo em: data/processed/after_textual.csv")
+    logger.info("="*60)
