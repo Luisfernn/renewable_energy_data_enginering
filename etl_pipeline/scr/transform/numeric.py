@@ -77,3 +77,24 @@ def clean_numeric_data(df):
     logger.info(f" Removidos {removed} registros\n")
 
     return df
+
+
+
+if __name__ == "__main__":
+
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter("%(message)s"))
+    logger.addHandler(handler)
+    logger.setLevel(logging.DEBUG)
+    # logger.setLevel(logging.INFO) 
+
+    logger.info("="*60)
+    logger.info("🚀 INICIANDO TRANSFORMAÇÕES NUMÉRICAS")
+    logger.info("="*60 + "\n")
+
+    df = pd.read_csv(INPUT_FILE)
+    logger.info(f"📊 Carregados {len(df)} registros\n")
+
+    df = round_metrics(df)
+    df = fill_nan_numeric_data(df)
+    df = clean_numeric_data(df)
