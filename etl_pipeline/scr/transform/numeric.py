@@ -59,3 +59,7 @@ def fill_nan_numeric_data(df):
     logger.debug(f"{df.tail(5)}")
 
     return df
+
+
+
+df = df.dropna(subset=['year'])    
