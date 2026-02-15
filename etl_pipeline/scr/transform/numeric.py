@@ -41,5 +41,21 @@ logger.info(f"✅ Dados numéricos arredondados!")
 return df
 
 
+def fill_nan_numeric_data(df):
 
-df[metric_columns] = df[metric_columns].fillna(0) 
+    nans_before = df[metric_columns].isna().sum().sum()
+
+
+    df[metric_columns] = df[metric_columns].fillna(0)
+
+
+    nans_after = df[metric_columns].isna().sum().sum()
+
+
+    fiiled = nans_before - nans_after
+
+    logger.info(f"{fiiled} células preenchidas com 0\n")
+    logger.debug(f"NaNs antes: {nans_before}, depois: {nans_after}")
+    logger.debug(f"{df.tail(5)}")
+
+    return df
