@@ -19,7 +19,7 @@ pd.set_option('display.max_columns', None)
 
 
 # normalização dos nomes das colunas
-def normalize_text_columns(df = None):
+def normalize_text_columns(df):
 
     normalized_columns={
         'Region': 'region',
@@ -90,7 +90,7 @@ def apply_text_rules(df):
 
 
 # normaliza dados de colunas textuais
-def normalize_text_data(df = None):
+def normalize_text_data(df):
 
     # nomes próprios
     locations_columns = ['region', 'sub_region', 'country'] 
@@ -136,7 +136,7 @@ def normalize_text_data(df = None):
 
 
 
-def clean_text_data(df= None):
+def clean_text_data(df):
 
  #remove linhas em registros nas colunas críticas
     critic_columuns = ['country', 'year', 'technology']
