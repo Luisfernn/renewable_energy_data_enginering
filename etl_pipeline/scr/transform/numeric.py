@@ -80,7 +80,8 @@ def round_metrics(df):
             df[col] = df[col].round(2)
 
     logger.info(f"\n✅ Dados numéricos arredondados!")
-    logger.debug(f"\nApós arrendondamento: \n{df[metric_columns].tail(5)}\n")     
+    logger.debug(f"\nApós arrendondamento:\n")
+    logger.debug({df[metric_columns].tail(5)})     
 
     return df
 
