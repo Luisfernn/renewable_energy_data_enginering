@@ -81,7 +81,7 @@ def round_metrics(df):
 
     logger.info(f"\n✅ Dados numéricos arredondados!")
     logger.debug(f"\nApós arrendondamento:\n")
-    logger.debug({df[metric_columns].tail(5)})     
+    logger.debug({df.tail(5)})     
 
     return df
 
