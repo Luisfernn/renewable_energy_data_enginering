@@ -62,10 +62,10 @@ def fill_nan_numeric_data(df):
 
 
     fiiled = nans_before - nans_after
-
-    logger.info(f"\n{fiiled} células preenchidas com 0\n")
-    logger.info("✅ Preenchimento de céluas vazias concluido!")
+    
+    logger.debug(f"\n{fiiled} células preenchidas com 0\n")
     logger.debug(f"\nNaNs antes: {nans_before}, depois: {nans_after}\n")
+    logger.info("✅ Preenchimento de céluas vazias concluido!")
     logger.debug(f"{df.tail(5)}")
 
     return df    
