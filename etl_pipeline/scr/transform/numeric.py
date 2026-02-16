@@ -93,6 +93,6 @@ if __name__ == "__main__":
     df = pd.read_csv(INPUT_FILE)
     logger.info(f"📊 Carregados {len(df)} registros\n")
 
-    df = round_metrics(df)
-    df = fill_nan_numeric_data(df)
     df = clean_numeric_data(df)
+    df = fill_nan_numeric_data(df)
+    df = round_metrics(df)
