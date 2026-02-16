@@ -15,8 +15,6 @@ OUTPUT_PATH = PROCESSED_DIR / 'renewable_energy_data_clean.csv'
 pd.set_option('display.max_columns', None)
 
 
-logger.debug(df.info())
-
 
 metric_columns = [
     'eletricity_generation_gwh',
