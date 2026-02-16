@@ -1,10 +1,10 @@
 import logging
 from pathlib import Path
 
-base_dir = Path(__file__).resolve().parent
-output_dir = base_dir / 'data' / 'processed'
+BASE_DIR = Path(__file__).resolve().parent
+OUTPUT_DIR = BASE_DIR / 'data' / 'processed'
 
-log_dir = base_dir / 'data' / 'logs'
+LOG_DIR = BASE_DIR / 'data' / 'logs'
 log_dir_mkdir(parents=True, exist_ok=True)
 
 
