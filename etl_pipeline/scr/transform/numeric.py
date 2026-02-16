@@ -41,7 +41,8 @@ def clean_numeric_data(df):
     after = len(df)
     removed = before - after
 
-    logger.info(f" Removidos {removed} registros\n")
+    logger.info(f"Removidos {removed} registros\n")
+    logger.debug(f"{df.tail(5)}")
 
     return df
 
@@ -62,7 +63,7 @@ def fill_nan_numeric_data(df):
     fiiled = nans_before - nans_after
 
     logger.info(f"{fiiled} células preenchidas com 0\n")
-    logger.debug(f"NaNs antes: {nans_before}, depois: {nans_after}")
+    logger.debug(f"\nNaNs antes: {nans_before}, depois: {nans_after}")
     logger.debug(f"{df.tail(5)}")
 
     return df    
@@ -76,8 +77,8 @@ def round_metrics(df):
         if col in df.columns:
             df[col] = df[col].round(2)
 
-    logger.debug(f"\nApós arrendondamento: \n{df[metric_columns].head()}")
-    logger.info(f"✅ Dados numéricos arredondados!")     
+    logger.info(f"✅ Dados numéricos arredondados!")
+    logger.debug(f"\nApós arrendondamento: \n{df[metric_columns].tail(5)}")     
 
     return df
 
