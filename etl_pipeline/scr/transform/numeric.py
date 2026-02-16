@@ -41,7 +41,7 @@ def clean_numeric_data(df):
     after = len(df)
     removed = before - after
 
-    logger.info(f"Removidos {removed} registros\n")
+    logger.info(f"Removidos {removed} registros")
     logger.info("\n✅ Limpeza de dados concluída!")
     logger.debug(f"{df.tail(5)}")
 
@@ -65,7 +65,7 @@ def fill_nan_numeric_data(df):
     
     logger.debug(f"\n{fiiled} células preenchidas com 0\n")
     logger.debug(f"\nNaNs antes: {nans_before}, depois: {nans_after}\n")
-    logger.info("✅ Preenchimento de céluas vazias concluido!")
+    logger.info("\n✅ Preenchimento de céluas vazias concluido!")
     logger.debug(f"{df.tail(5)}")
 
     return df    
