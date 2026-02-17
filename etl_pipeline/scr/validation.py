@@ -17,7 +17,7 @@ def validate_columns(df):
 
     logger.info("Iniciando validação de colunas...")
 
-    expected_columns[
+    expected_columns = [
         'region',
         'sub_region',
         'country',
