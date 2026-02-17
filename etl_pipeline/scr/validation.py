@@ -69,7 +69,7 @@ def validate_columns(df):
 
 
 
-if __name__ == '_main__':
+if __name__ == '__main__':
 
     handler = logging.StreamHandler()
     handler.setFormatter(logging.Formatter("%(message)s"))
