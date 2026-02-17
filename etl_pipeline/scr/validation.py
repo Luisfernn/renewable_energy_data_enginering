@@ -93,6 +93,26 @@ def generation_without_instaled_capacity(df):
 
 
 
+def validate_regions(df):
+
+    valid_regions = [
+        'Africa',
+        'Americas',
+        'Asia',
+        'Europe',
+        'Oceania'
+    ]
+
+    invalid_regions = df[~df['region'].isin(valid_regions)]
+
+    if len(invalid_regions) > 0:
+        found = invalid_regions['region'].unique().tolist()
+        logger.error(f"\n❌ Regiões inválidas encontradas: {found}")
+    else:
+        logger.info("\n✅ Todas as linhas com region válido!")    
+
+    return df           
+
 
 
 
