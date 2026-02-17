@@ -83,7 +83,7 @@ if __name__ == '__main__':
     logger.info("="*60)
 
     df = pd.read_csv(INPUT_DIR)
-    logger.info(f"📊 Carregados {df(len)} registros")
+    logger.info(f"📊 Carregados {len(df)} registros")
 
 
     df = validate_columns(df)
