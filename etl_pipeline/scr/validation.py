@@ -57,16 +57,16 @@ def validate_columns(df):
 
 
 
-    def nulls_year_column(df):
+def nulls_year_column(df):
 
-        null = df['year'].isna().sum()
+    null = df['year'].isna().sum()
 
-        if null > 0:
-            logger.warning(f"\n⚠️ {null} linhas com a coluna year vazia") 
-        else:
-            logger.info("\n✅ Sem null na coluna year!")
+    if null > 0:
+        logger.warning(f"\n⚠️ {null} linhas com a coluna year vazia") 
+    else:
+        logger.info("\n✅ Sem null na coluna year!")
 
-        return df        
+    return df        
 
 
 
