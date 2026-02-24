@@ -188,8 +188,16 @@ if __name__ == '__main__':
 
 
     df = validate_columns(df)
+    validate_registers_count(df)
+    nulls_year_column(df)
+    validate_regions(df)
+    validate_country_count(df)
+    generation_without_instaled_capacity(df)
+    validate_composed_key(df)
 
+    df.to_csv(OUTPUT_PATH, index=False)
 
-    df.to_csv(OUTPUT_PATH)
-
- 
+    logger.info("="*60)
+    logger.info("✅ TRANSFORMAÇÕES TEXTUAIS CONCLUÍDAS")
+    logger.info(f"📁 Salvo em: data/processed/renewable_energy_data_validated.csv")
+    logger.info("="*60)
