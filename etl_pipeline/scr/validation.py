@@ -164,7 +164,7 @@ def validate_country_count(df):
     if total_country < min_c_expected:
         logger.warning(f"⚠️ Poucos países: {total_country} (esperado: >{min_c_expected})")
     else:
-        logger.info(f"✅ Total de países únicos: {total_paises}\n")
+        logger.info(f"✅ Total de países únicos: {total_country}\n")
 
 
     return df        
