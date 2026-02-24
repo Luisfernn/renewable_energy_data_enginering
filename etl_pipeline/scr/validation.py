@@ -109,7 +109,22 @@ def validate_regions(df):
         found = invalid_regions['region'].unique().tolist()
         logger.error(f"\n❌ Regiões inválidas encontradas: {found}")
     else:
-        logger.info("\n✅ Todas as linhas com region válido!")    
+        logger.info("\n✅ Todas as linhas com region válido!")
+
+
+
+def validate_composed_key(df):
+
+    key = ['country', 'year', 'technology', 'sub_technology', 'producer_type']
+
+    duplicates = df.duplicated(subset=key).sum()
+
+    if duplicates > 0:
+        logger.error(f"❌ {duplicatas} linhas duplicadas encontradas!")
+        logger.debu(f"\nExemplos:\n{df[df.duplicated(subset=chave, keep=False)].head()}\n")
+    else:
+        logger.info("✅ Chave composta única. Sem duplicatas!\n")    
+        
 
     return df           
 
