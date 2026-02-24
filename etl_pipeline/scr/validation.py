@@ -101,7 +101,7 @@ def generation_without_instaled_capacity(df):
 
 def validate_regions(df):
 
-    logger.info("Verificando se há registros com região inválida")
+    logger.info("\nVerificando se há registros com região inválida...")
 
     valid_regions = [
         'Africa',
@@ -115,9 +115,9 @@ def validate_regions(df):
 
     if len(invalid_regions) > 0:
         found = invalid_regions['region'].unique().tolist()
-        logger.error(f"\n❌ Regiões inválidas encontradas: {found}")
+        logger.error(f"❌ Regiões inválidas encontradas: {found}")
     else:
-        logger.info("\n✅ Todas as linhas com region válido!")
+        logger.info("✅ Todas as linhas com region válido!")
 
 
     return df    
@@ -126,7 +126,7 @@ def validate_regions(df):
 
 def validate_composed_key(df):
 
-    logger.info("Verificando se há duplicatas...")
+    logger.info("\nVerificando se há duplicatas...")
 
     key = ['country', 'year', 'technology', 'sub_technology', 'producer_type']
 
@@ -136,7 +136,7 @@ def validate_composed_key(df):
         logger.error(f"❌ {duplicates} linhas duplicadas encontradas!")
         logger.debug(f"\nExemplos:\n{df[df.duplicated(subset=key, keep=False)].head()}\n")
     else:
-        logger.info("\n✅ Chave composta única. Sem duplicatas!\n")    
+        logger.info("✅ Chave composta única. Sem duplicatas!\n")    
 
 
     return df 
