@@ -148,7 +148,7 @@ def validate_registers_count(df):
     elif total < min_expected:
         logger.warning(f"⚠️ Poucos registros: {total:,} (esperado: >{min_expected:,})")
     else:
-        logger.info(f"✅ Total de registros: {total:,}\n")
+        logger.info(f"✅ Total de registros: {total:,}")
     
 
     return df
