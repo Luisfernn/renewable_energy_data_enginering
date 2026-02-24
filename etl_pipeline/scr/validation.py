@@ -60,6 +60,8 @@ def validate_columns(df):
 
 def nulls_year_column(df):
 
+    logger.info("Verificando valores nulls na coluna year...")
+
     null = df['year'].isna().sum()
 
     if null > 0:
