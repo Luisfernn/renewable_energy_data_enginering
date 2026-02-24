@@ -112,6 +112,9 @@ def validate_regions(df):
         logger.info("\n✅ Todas as linhas com region válido!")
 
 
+    return df    
+
+
 
 def validate_composed_key(df):
 
@@ -124,7 +127,7 @@ def validate_composed_key(df):
         logger.debu(f"\nExemplos:\n{df[df.duplicated(subset=chave, keep=False)].head()}\n")
     else:
         logger.info("✅ Chave composta única. Sem duplicatas!\n")    
-        
+
 
     return df           
 
