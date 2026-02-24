@@ -129,11 +129,24 @@ def validate_composed_key(df):
         logger.info("✅ Chave composta única. Sem duplicatas!\n")    
 
 
-    return df           
+    return df 
 
 
 
-
+def validate_registers_count(df):
+    logger.info("Validando contagem de registros...")
+    
+    total = len(df)
+    min_expected = 60000
+    
+    if total == 0:
+        logger.error("❌ Dataset vazio! Todas as linhas foram removidas!")
+    elif total < min_expected:
+        logger.warning(f"⚠️ Poucos registros: {total:,} (esperado: >{min_expected:,})")
+    else:
+        logger.info(f"✅ Total de registros: {total:,}\n")
+    
+    return df
 
 
 
