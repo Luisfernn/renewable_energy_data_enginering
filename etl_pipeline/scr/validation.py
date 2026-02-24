@@ -126,7 +126,7 @@ def validate_composed_key(df):
 
     if duplicates > 0:
         logger.error(f"❌ {duplicates} linhas duplicadas encontradas!")
-        logger.debu(f"\nExemplos:\n{df[df.duplicates(subset=key, keep=False)].head()}\n")
+        logger.debug(f"\nExemplos:\n{df[df.duplicated(subset=key, keep=False)].head()}\n")
     else:
         logger.info("✅ Chave composta única. Sem duplicatas!\n")    
 
