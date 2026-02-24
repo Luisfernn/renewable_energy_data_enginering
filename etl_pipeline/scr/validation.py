@@ -153,6 +153,22 @@ def validate_registers_count(df):
 
 
 
+def validate_country_count(df):
+    
+    logger.info("Validando contagem de países...")
+
+    total_country = df['country'].nunique()
+
+    min_c_expected = 200
+
+    if total_country < min_c_expected:
+        logger.warning(f"⚠️ Poucos países: {total_paises} (esperado: >{minimo_esperado})")
+    else:
+        logger.info(f"✅ Total de países únicos: {total_paises}\n")
+
+
+    return df        
+
 
 
 
