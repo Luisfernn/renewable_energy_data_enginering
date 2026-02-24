@@ -53,6 +53,7 @@ def validate_columns(df):
         if wrong_order:
             logger.error(f"❌ Ordem incorreta!\n Esperando: {expected_columns}\n Atual: {currently_columns} ")   
 
+
     return df                  
 
 
@@ -65,6 +66,7 @@ def nulls_year_column(df):
         logger.warning(f"\n⚠️ {null} linhas com a coluna year vazia") 
     else:
         logger.info("\n✅ Sem null na coluna year!")
+
 
     return df        
 
@@ -146,6 +148,7 @@ def validate_registers_count(df):
     else:
         logger.info(f"✅ Total de registros: {total:,}\n")
     
+
     return df
 
 
