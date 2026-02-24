@@ -125,8 +125,8 @@ def validate_composed_key(df):
     duplicates = df.duplicated(subset=key).sum()
 
     if duplicates > 0:
-        logger.error(f"❌ {duplicatas} linhas duplicadas encontradas!")
-        logger.debu(f"\nExemplos:\n{df[df.duplicated(subset=key, keep=False)].head()}\n")
+        logger.error(f"❌ {duplicates} linhas duplicadas encontradas!")
+        logger.debu(f"\nExemplos:\n{df[df.duplicates(subset=key, keep=False)].head()}\n")
     else:
         logger.info("✅ Chave composta única. Sem duplicatas!\n")    
 
@@ -162,7 +162,7 @@ def validate_country_count(df):
     min_c_expected = 200
 
     if total_country < min_c_expected:
-        logger.warning(f"⚠️ Poucos países: {total_paises} (esperado: >{min_c_expected})")
+        logger.warning(f"⚠️ Poucos países: {total_country} (esperado: >{min_c_expected})")
     else:
         logger.info(f"✅ Total de países únicos: {total_paises}\n")
 
