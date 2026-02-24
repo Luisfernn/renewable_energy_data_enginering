@@ -60,14 +60,14 @@ def validate_columns(df):
 
 def nulls_year_column(df):
 
-    logger.info("Verificando valores nulls na coluna year...")
+    logger.info("\nVerificando valores nulls na coluna year...")
 
     null = df['year'].isna().sum()
 
     if null > 0:
         logger.warning(f"\n⚠️ {null} linhas com a coluna year vazia") 
     else:
-        logger.info("\n✅ Sem null na coluna year!")
+        logger.info("✅ Sem null na coluna year!")
 
 
     return df        
@@ -75,6 +75,8 @@ def nulls_year_column(df):
 
 
 def generation_without_instaled_capacity(df):
+
+    logger.info("Verificando se há geração de energia sem capacidade instalada...")
 
     gen_w_cap = df[(df['eletricity_generation_gwh'] > 0) & (df['eletricity_installed_capacity_mw'] <= 0)]
 
@@ -88,7 +90,7 @@ def generation_without_instaled_capacity(df):
            
 
     if len(per_w_cap) > 0:
-        logger.warning("\n⚠️ Não tem capacidade de energia instalada onde tem capacidade de energia per capta!")
+        logger.warning("⚠️ Não tem capacidade de energia instalada onde tem capacidade de energia per capta!")
     else:
         logger.info("\n✅ Tem capacidade de energia instalada onde tem capacidade de energia per capta!")
 
@@ -98,6 +100,8 @@ def generation_without_instaled_capacity(df):
 
 
 def validate_regions(df):
+
+    logger.info("Verificando se há registros com região inválida")
 
     valid_regions = [
         'Africa',
@@ -121,6 +125,8 @@ def validate_regions(df):
 
 
 def validate_composed_key(df):
+
+    logger.info("Verificando se há duplicatas...")
 
     key = ['country', 'year', 'technology', 'sub_technology', 'producer_type']
 
