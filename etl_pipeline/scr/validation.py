@@ -15,7 +15,7 @@ OUTPUT_PATH = PROCESSED_DIR / 'renewable_energy_data_validated.csv'
 
 def validate_columns(df):
 
-    logger.info("Iniciando validação de colunas...")
+    logger.info("\nIniciando validação de colunas...")
 
     expected_columns = [
         'region',
@@ -128,7 +128,7 @@ def validate_composed_key(df):
         logger.error(f"❌ {duplicates} linhas duplicadas encontradas!")
         logger.debug(f"\nExemplos:\n{df[df.duplicated(subset=key, keep=False)].head()}\n")
     else:
-        logger.info("✅ Chave composta única. Sem duplicatas!\n")    
+        logger.info("\n✅ Chave composta única. Sem duplicatas!\n")    
 
 
     return df 
@@ -155,7 +155,7 @@ def validate_registers_count(df):
 
 def validate_country_count(df):
     
-    logger.info("Validando contagem de países...")
+    logger.info("\nValidando contagem de países...")
 
     total_country = df['country'].nunique()
 
@@ -184,7 +184,7 @@ if __name__ == '__main__':
     logger.info("="*60)
 
     df = pd.read_csv(INPUT_DIR)
-    logger.info(f"📊 Carregados {len(df)} registros")
+    logger.info(f"\n📊 Carregados {len(df)} registros")
 
 
     df = validate_columns(df)
