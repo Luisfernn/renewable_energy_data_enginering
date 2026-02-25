@@ -12,47 +12,47 @@ INPUT_FILE = PROCESSED_DIR / 'renewable_energy_data_final.csv'
 DATABASE_URL = 'postgresql+psycopg2://postgres:postgres123@localhost:5433/renewable_energy'
 
 
-def load_dimensions(df, engine):
+def load_dimensions(df, conn):
 
     logger.info("Carregando dimensões...")
 
     # dim_country
     logger.info("  → dim_country...")
     df_country = df[['country', 'iso3_code', 'm49_code', 'region', 'sub_region']].drop_duplicates()
-    df_country.to_sql('dim_country', engine, if_exists='append', index=False, method='multi')
+    df_country.to_sql('dim_country', conn, if_exists='append', index=False, method='multi')
     logger.info(f"    ✅ {len(df_country)} países inseridos")
-    
+
     # dim_technology
     logger.info("  → dim_technology...")
     df_tech = df[['technology', 'sub_technology', 'group_technology', 'renewable_or_not']].drop_duplicates()
-    df_tech.to_sql('dim_technology', engine, if_exists='append', index=False, method='multi')
+    df_tech.to_sql('dim_technology', conn, if_exists='append', index=False, method='multi')
     logger.info(f"    ✅ {len(df_tech)} tecnologias inseridas")
-    
+
     # dim_time
     logger.info("  → dim_time...")
     df_time = df[['year']].drop_duplicates()
     df_time['decade'] = (df_time['year'] // 10) * 10
-    df_time.to_sql('dim_time', engine, if_exists='append', index=False, method='multi')
+    df_time.to_sql('dim_time', conn, if_exists='append', index=False, method='multi')
     logger.info(f"    ✅ {len(df_time)} anos inseridos")
-    
+
     # dim_producer
     logger.info("  → dim_producer...")
     df_producer = df[['producer_type']].drop_duplicates()
-    df_producer.to_sql('dim_producer', engine, if_exists='append', index=False, method='multi')
+    df_producer.to_sql('dim_producer', conn, if_exists='append', index=False, method='multi')
     logger.info(f"    ✅ {len(df_producer)} tipos de produtor inseridos")
-    
+
     logger.info("✅ Dimensões carregadas!\n")
 
 
-def get_ids_dimensions(df, engine):
+def get_ids_dimensions(df, conn):
 
     logger.info("Mapeando IDs das dimensões...")
-    
+
     # Lê as dimensões do banco
-    dim_country = pd.read_sql('SELECT country_id, country FROM dim_country', engine)
-    dim_tech = pd.read_sql('SELECT technology_id, technology FROM dim_technology', engine)
-    dim_time = pd.read_sql('SELECT time_id, year FROM dim_time', engine)
-    dim_producer = pd.read_sql('SELECT producer_id, producer_type FROM dim_producer', engine)
+    dim_country = pd.read_sql('SELECT country_id, country FROM dim_country', conn)
+    dim_tech = pd.read_sql('SELECT technology_id, technology FROM dim_technology', conn)
+    dim_time = pd.read_sql('SELECT time_id, year FROM dim_time', conn)
+    dim_producer = pd.read_sql('SELECT producer_id, producer_type FROM dim_producer', conn)
     
     # Faz merge para obter IDs
     df = df.merge(dim_country, on='country', how='left')
@@ -65,10 +65,10 @@ def get_ids_dimensions(df, engine):
     return df
 
 
-def load_fact(df, engine):
-    
+def load_fact(df, conn):
+
     logger.info("Carregando tabela fato...")
-    
+
     # Seleciona apenas colunas necessárias
     df_fact = df[[
         'country_id', 'technology_id', 'time_id', 'producer_id',
@@ -76,9 +76,9 @@ def load_fact(df, engine):
         'total_public_flows_usd_m', 'international_public_flows_usd_m',
         'capacity_per_capita_w'
     ]]
-    
+
     # Insere
-    df_fact.to_sql('fact_energy_generation', engine, if_exists='append', index=False, method='multi')
+    df_fact.to_sql('fact_energy_generation', conn, if_exists='append', index=False, method='multi')
     
     logger.info(f"✅ {len(df_fact)} registros inseridos na tabela fato!\n")
 
@@ -99,15 +99,16 @@ def load_data():
         logger.info("🔌 Conectando ao PostgreSQL...")
         engine = create_engine(DATABASE_URL)
         logger.info("✅ Conectado!\n")
-        
-        # Carrega dimensões
-        load_dimensions(df, engine)
-        
-        # Mapeia IDs
-        df = get_ids_dimensions(df, engine)
-        
-        # Carrega fato
-        load_fact(df, engine)
+
+        with engine.begin() as conn:
+            # Carrega dimensões
+            load_dimensions(df, conn)
+
+            # Mapeia IDs
+            df = get_ids_dimensions(df, conn)
+
+            # Carrega fato
+            load_fact(df, conn)
         
         logger.info("="*60)
         logger.info("✅ CARGA CONCLUÍDA COM SUCESSO!")
