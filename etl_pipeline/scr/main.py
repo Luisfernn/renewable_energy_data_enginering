@@ -20,6 +20,7 @@ from validation import(
     generation_without_instaled_capacity,
     validate_composed_key
 )
+from load import load_data
 
 BASE_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = BASE_DIR / 'data' / 'processed'
@@ -60,10 +61,17 @@ def main():
     df = fill_nan_numeric_data(df)
     df = round_metrics()
 
-    logger.info("\n🔍 ETAPA 4/4: VALIDAÇÃO")
+    logger.info("\n🔍 ETAPA 4/5: VALIDAÇÃO")
     df = validate_registers_count(df)
     df = nulls_year_column(df)
     df = validate_regions(df)
     df = validate_country_count (df)
     df = generation_without_instaled_capacity(df)
     df = validate_composed_key(df)
+ 
+    logger.info("\n💾 ETAPA 5/5 SALVAMENTO DOS DADOS")
+    df.to_csv(OUTPUT_DIR / 'renewable_energy_data_final.csv', index=False)
+    logger.info("✅ Salvo!")
+
+    # Carregamento de dados para o Data Warehouse
+    load_data(df)
