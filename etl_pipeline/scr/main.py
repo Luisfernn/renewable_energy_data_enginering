@@ -1,6 +1,26 @@
 import logging
 from pathlib import Path
 
+from extract import extract_data
+from transform.text import(
+    normalize_text_columns,
+    normalize_text_data,
+    clean_text_data
+)
+from transform.numeric import(
+    clean_numeric_data,
+    fill_nan_numeric_data,
+    round_metrics
+)
+from validation import(
+    validate_registers_count,
+    nulls_year_column,
+    validate_regions,
+    validate_country_count,
+    generation_without_instaled_capacity,
+    validate_composed_key
+)
+
 BASE_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = BASE_DIR / 'data' / 'processed'
 
@@ -16,3 +36,31 @@ logging.basicConfig(
         logging.StreamHandler()
     ]
 )
+
+
+def main():
+
+    logger.info("="*60)
+    logger.info("PIPELINE ETL - RENEWABLE ENERGY DATA")
+    logger.info("="*60)
+
+    logger.info("\n📥 ETAPA 1/5: EXTRAÇÃO")
+    df = extract_data()
+
+    logger.info("\n📝 ETAPA 2/5: TRANSFORMAÇÕES TEXTUAIS")
+    df = normalize_text_columns()
+    df = normalize_text_data()
+    df = clean_text_data()
+
+    logger.info("\n🔢 ETAPA 3/5: TRANSFORMAÇÕES NUMÉRICAS")
+    df = clean_numeric_data()
+    df = fill_nan_numeric_data()
+    df = round_metrics()
+
+    logger.info("\n🔍 ETAPA 4/4: VALIDAÇÃO")
+    df = validate_registers_count()
+    df = nulls_year_column()
+    df = validate_regions()
+    df = validate_country_count ()
+    df = generation_without_instaled_capacity()
+    df = validate_composed_key
