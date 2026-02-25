@@ -83,18 +83,13 @@ def load_fact(df, conn):
     logger.info(f"✅ {len(df_fact)} registros inseridos na tabela fato!\n")
 
 
-def load_data():
+def load_data(df):
     """Pipeline completo de carga"""
     logger.info("="*60)
     logger.info("📤 INICIANDO CARGA NO DATA WAREHOUSE")
     logger.info("="*60 + "\n")
-    
+
     try:
-        # Lê dados limpos
-        logger.info(f"📂 Lendo dados de: {INPUT_FILE}")
-        df = pd.read_csv(INPUT_FILE)
-        logger.info(f"✅ {len(df)} registros carregados\n")
-        
         # Conecta ao banco
         logger.info("🔌 Conectando ao PostgreSQL...")
         engine = create_engine(DATABASE_URL)
@@ -129,5 +124,6 @@ if __name__ == "__main__":
     handler.setFormatter(logging.Formatter("%(message)s"))
     logger.addHandler(handler)
     logger.setLevel(logging.INFO)
-    
-    load_data()
+
+    df = pd.read_csv(INPUT_FILE)
+    load_data(df)
