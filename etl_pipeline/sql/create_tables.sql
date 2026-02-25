@@ -36,10 +36,10 @@ CREATE TABLE IF NOT EXISTS fact_energy_generation(
     time_id INTEGER REFERENCES dim_time(time_id),
     producer_id INTEGER REFERENCES dim_producer(producer_id),
 
-    electrecity_generation_gwh NUMERIC(12,2),
+    electricity_generation_gwh NUMERIC(12,2),
     capacity_mw NUMERIC(12,2),
     heat_generation_tj NUMERIC(12,2),
     total_public_flows_usd_m NUMERIC(12,2),
     international_public_flows_usd_m NUMERIC(12,2),
-    capacity_per_capita NUMERIC(10,2)
+    capacity_per_capita_w NUMERIC(10,2)
 );
