@@ -115,7 +115,7 @@ def validate_regions(df):
 
     if len(invalid_regions) > 0:
         found = invalid_regions['region'].unique().tolist()
-        logger.error(f"❌ Regiões inválidas encontradas: {found}")
+        logger.warning(f"⚠️ Regiões inválidas encontradas: {found}")
     else:
         logger.info("✅ Todas as linhas com region válido!")
 
