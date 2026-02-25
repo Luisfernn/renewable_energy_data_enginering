@@ -101,6 +101,11 @@ def load_data():
         logger.info("✅ Conectado!\n")
 
         with engine.begin() as conn:
+            # Limpa tabelas antes de recarregar (evita duplicatas)
+            logger.info("🗑️  Limpando tabelas...")
+            conn.execute(text("TRUNCATE TABLE fact_energy_generation, dim_country, dim_technology, dim_time, dim_producer RESTART IDENTITY CASCADE"))
+            logger.info("✅ Tabelas limpas!\n")
+
             # Carrega dimensões
             load_dimensions(df, conn)
 
