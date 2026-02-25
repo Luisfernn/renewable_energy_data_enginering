@@ -119,7 +119,6 @@ def load_data():
 
 
 if __name__ == "__main__":
-    # Configura logging
     handler = logging.StreamHandler()
     handler.setFormatter(logging.Formatter("%(message)s"))
     logger.addHandler(handler)
