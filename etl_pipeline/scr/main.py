@@ -59,7 +59,7 @@ def main():
     logger.info("\n🔢 ETAPA 3/5: TRANSFORMAÇÕES NUMÉRICAS")
     df = clean_numeric_data(df)
     df = fill_nan_numeric_data(df)
-    df = round_metrics()
+    df = round_metrics(df)
 
     logger.info("\n🔍 ETAPA 4/5: VALIDAÇÃO")
     df = validate_registers_count(df)
