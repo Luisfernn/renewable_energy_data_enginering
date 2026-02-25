@@ -22,7 +22,7 @@ metric_columns = [
     'heat_generation_tj',
     'total_public_flows_usd_m',
     'international_public_flows_usd_m',
-    'capacity_per_capta_w'
+    'capacity_per_capita_w'
 ]
 
 

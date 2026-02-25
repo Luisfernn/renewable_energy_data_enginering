@@ -34,7 +34,7 @@ def validate_columns(df):
         'heat_generation_tj',
         'total_public_flows_usd_m',
         'international_public_flows_usd_m',
-        'capacity_per_capta_w'
+        'capacity_per_capita_w'
     ]
 
     currently_columns = df.columns.tolist()
@@ -141,7 +141,7 @@ def generation_without_instaled_capacity(df):
 
     gen_w_cap = df[(df['eletricity_generation_gwh'] > 0) & (df['eletricity_installed_capacity_mw'] <= 0)]
 
-    per_w_cap = df[(df['capacity_per_capta_w'] > 0) & (df['eletricity_installed_capacity_mw'] <= 0)]
+    per_w_cap = df[(df['capacity_per_capita_w'] > 0) & (df['eletricity_installed_capacity_mw'] <= 0)]
 
 
     if len(gen_w_cap) > 0:

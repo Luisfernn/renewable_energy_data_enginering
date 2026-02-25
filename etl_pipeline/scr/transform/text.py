@@ -38,7 +38,7 @@ def normalize_text_columns(df):
         'Heat Generation (TJ)': 'heat_generation_tj',
         'Public Flows (2022 USD M)': 'total_public_flows_usd_m',
         'SDG 7a1 Intl. Public Flows (2022 USD M)': 'international_public_flows_usd_m',
-        'SDG 7b1 RE capacity per capita (W/inhabitant)': 'capacity_per_capta_w'
+        'SDG 7b1 RE capacity per capita (W/inhabitant)': 'capacity_per_capita_w'
     }
 
     df = df.rename(columns=normalized_columns)
