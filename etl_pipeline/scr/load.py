@@ -1,0 +1,128 @@
+import pandas as pd
+import logging
+from sqlalchemy import create_engine, text
+from pathlib import Path
+
+logger = logging.getLogger(__name__)
+
+BASE_DIR = Path(__file__).resolve().parent
+PROCESSED_DIR = BASE_DIR / 'data' / 'processed'
+INPUT_FILE = PROCESSED_DIR / 'renewable_energy_data_final.csv'
+
+DATABASE_URL = 'postgresql+psycopg2://postgres:postgres123@localhost:5433/renewable_energy'
+
+
+def load_dimensions(df, engine):
+
+    logger.info("Carregando dimensões...")
+
+    # dim_country
+    logger.info("  → dim_country...")
+    df_country = df[['country', 'iso3_code', 'm49_code', 'region', 'sub_region']].drop_duplicates()
+    df_country.to_sql('dim_country', engine, if_exists='append', index=False, method='multi')
+    logger.info(f"    ✅ {len(df_country)} países inseridos")
+    
+    # dim_technology
+    logger.info("  → dim_technology...")
+    df_tech = df[['technology', 'sub_technology', 'group_technology', 'renewable_or_not']].drop_duplicates()
+    df_tech.to_sql('dim_technology', engine, if_exists='append', index=False, method='multi')
+    logger.info(f"    ✅ {len(df_tech)} tecnologias inseridas")
+    
+    # dim_time
+    logger.info("  → dim_time...")
+    df_time = df[['year']].drop_duplicates()
+    df_time['decade'] = (df_time['year'] // 10) * 10
+    df_time.to_sql('dim_time', engine, if_exists='append', index=False, method='multi')
+    logger.info(f"    ✅ {len(df_time)} anos inseridos")
+    
+    # dim_producer
+    logger.info("  → dim_producer...")
+    df_producer = df[['producer_type']].drop_duplicates()
+    df_producer.to_sql('dim_producer', engine, if_exists='append', index=False, method='multi')
+    logger.info(f"    ✅ {len(df_producer)} tipos de produtor inseridos")
+    
+    logger.info("✅ Dimensões carregadas!\n")
+
+
+def get_ids_dimensions(df, engine):
+
+    logger.info("Mapeando IDs das dimensões...")
+    
+    # Lê as dimensões do banco
+    dim_country = pd.read_sql('SELECT country_id, country FROM dim_country', engine)
+    dim_tech = pd.read_sql('SELECT technology_id, technology FROM dim_technology', engine)
+    dim_time = pd.read_sql('SELECT time_id, year FROM dim_time', engine)
+    dim_producer = pd.read_sql('SELECT producer_id, producer_type FROM dim_producer', engine)
+    
+    # Faz merge para obter IDs
+    df = df.merge(dim_country, on='country', how='left')
+    df = df.merge(dim_tech, on='technology', how='left')
+    df = df.merge(dim_time, on='year', how='left')
+    df = df.merge(dim_producer, on='producer_type', how='left')
+    
+    logger.info("✅ IDs mapeados!\n")
+    
+    return df
+
+
+def load_fact(df, engine):
+    
+    logger.info("Carregando tabela fato...")
+    
+    # Seleciona apenas colunas necessárias
+    df_fact = df[[
+        'country_id', 'technology_id', 'time_id', 'producer_id',
+        'electricity_generation_gwh', 'capacity_mw', 'heat_generation_tj',
+        'total_public_flows_usd_m', 'international_public_flows_usd_m',
+        'capacity_per_capita_w'
+    ]]
+    
+    # Insere
+    df_fact.to_sql('fact_energy_generation', engine, if_exists='append', index=False, method='multi')
+    
+    logger.info(f"✅ {len(df_fact)} registros inseridos na tabela fato!\n")
+
+
+def load_data():
+    """Pipeline completo de carga"""
+    logger.info("="*60)
+    logger.info("📤 INICIANDO CARGA NO DATA WAREHOUSE")
+    logger.info("="*60 + "\n")
+    
+    try:
+        # Lê dados limpos
+        logger.info(f"📂 Lendo dados de: {INPUT_FILE}")
+        df = pd.read_csv(INPUT_FILE)
+        logger.info(f"✅ {len(df)} registros carregados\n")
+        
+        # Conecta ao banco
+        logger.info("🔌 Conectando ao PostgreSQL...")
+        engine = create_engine(DATABASE_URL)
+        logger.info("✅ Conectado!\n")
+        
+        # Carrega dimensões
+        load_dimensions(df, engine)
+        
+        # Mapeia IDs
+        df = get_ids_dimensions(df, engine)
+        
+        # Carrega fato
+        load_fact(df, engine)
+        
+        logger.info("="*60)
+        logger.info("✅ CARGA CONCLUÍDA COM SUCESSO!")
+        logger.info("="*60)
+        
+    except Exception as e:
+        logger.error(f"❌ Erro na carga: {e}")
+        raise
+
+
+if __name__ == "__main__":
+    # Configura logging
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter("%(message)s"))
+    logger.addHandler(handler)
+    logger.setLevel(logging.INFO)
+    
+    load_data()
