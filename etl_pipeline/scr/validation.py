@@ -83,7 +83,7 @@ def nulls_year_column(df):
     null = df['year'].isna().sum()
 
     if null > 0:
-        logger.warning(f"\n⚠️ {null} linhas com a coluna year vazia")
+        logger.error(f"\n❌ {null} linhas com a coluna year vazia")
     else:
         logger.info("✅ Sem null na coluna year!")
 
