@@ -145,13 +145,13 @@ def generation_without_instaled_capacity(df):
 
 
     if len(gen_w_cap) > 0:
-        logger.warning("\n⚠️ Não tem capacidade de energia instalada onde tem geração energia!")
+        logger.warning(f"\n⚠️ {len(gen_w_cap)} Registros não tem capacidade de energia instalada onde tem geração energia!")
     else:
         logger.info("\n✅ Tem capacidade de energia instalada onde tem geração de energia!")
 
 
     if len(per_w_cap) > 0:
-        logger.warning("⚠️ Não tem capacidade de energia instalada onde tem capacidade de energia per capta!")
+        logger.warning(f"⚠️ {len(per_w_cap)} Registros não tem capacidade de energia instalada onde tem capacidade de energia per capta!")
     else:
         logger.info("\n✅ Tem capacidade de energia instalada onde tem capacidade de energia per capta!")
 
