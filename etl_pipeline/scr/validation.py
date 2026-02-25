@@ -44,17 +44,35 @@ def validate_columns(df):
     else:
         missing = set(expected_columns) - set(currently_columns)
         extra = set(currently_columns) - set(expected_columns)
-        wrong_order = currently_columns != expected_columns 
+        wrong_order = currently_columns != expected_columns
 
         if missing:
             logger.error(f"❌ Colunas faltando: {missing}")
         if extra:
             logger.error(f"❌ Colunas extras: {extra}")
         if wrong_order:
-            logger.error(f"❌ Ordem incorreta!\n Esperando: {expected_columns}\n Atual: {currently_columns} ")   
+            logger.error(f"❌ Ordem incorreta!\n Esperando: {expected_columns}\n Atual: {currently_columns} ")
 
 
-    return df                  
+    return df
+
+
+
+def validate_registers_count(df):
+    logger.info("Validando contagem de registros...")
+
+    total = len(df)
+    min_expected = 60000
+
+    if total == 0:
+        logger.error("❌ Dataset vazio! Todas as linhas foram removidas!")
+    elif total < min_expected:
+        logger.warning(f"⚠️ Poucos registros: {total:,} (esperado: >{min_expected:,})")
+    else:
+        logger.info(f"✅ Total de registros: {total:,}")
+
+
+    return df
 
 
 
@@ -65,34 +83,9 @@ def nulls_year_column(df):
     null = df['year'].isna().sum()
 
     if null > 0:
-        logger.warning(f"\n⚠️ {null} linhas com a coluna year vazia") 
+        logger.warning(f"\n⚠️ {null} linhas com a coluna year vazia")
     else:
         logger.info("✅ Sem null na coluna year!")
-
-
-    return df        
-
-
-
-def generation_without_instaled_capacity(df):
-
-    logger.info("Verificando se há geração de energia sem capacidade instalada...")
-
-    gen_w_cap = df[(df['eletricity_generation_gwh'] > 0) & (df['eletricity_installed_capacity_mw'] <= 0)]
-
-    per_w_cap = df[(df['capacity_per_capta_w'] > 0) & (df['eletricity_installed_capacity_mw'] <= 0)]
-    
-
-    if len(gen_w_cap) > 0:
-        logger.warning("\n⚠️ Não tem capacidade de energia instalada onde tem geração energia!")
-    else:
-        logger.info("\n✅ Tem capacidade de energia instalada onde tem geração de energia!")
-           
-
-    if len(per_w_cap) > 0:
-        logger.warning("⚠️ Não tem capacidade de energia instalada onde tem capacidade de energia per capta!")
-    else:
-        logger.info("\n✅ Tem capacidade de energia instalada onde tem capacidade de energia per capta!")
 
 
     return df
@@ -120,7 +113,50 @@ def validate_regions(df):
         logger.info("✅ Todas as linhas com region válido!")
 
 
-    return df    
+    return df
+
+
+
+def validate_country_count(df):
+
+    logger.info("\nValidando contagem de países...")
+
+    total_country = df['country'].nunique()
+
+    min_c_expected = 200
+
+    if total_country < min_c_expected:
+        logger.warning(f"⚠️ Poucos países: {total_country} (esperado: >{min_c_expected})")
+    else:
+        logger.info(f"✅ Total de países únicos: {total_country}\n")
+
+
+    return df
+
+
+
+def generation_without_instaled_capacity(df):
+
+    logger.info("Verificando se há geração de energia sem capacidade instalada...")
+
+    gen_w_cap = df[(df['eletricity_generation_gwh'] > 0) & (df['eletricity_installed_capacity_mw'] <= 0)]
+
+    per_w_cap = df[(df['capacity_per_capta_w'] > 0) & (df['eletricity_installed_capacity_mw'] <= 0)]
+
+
+    if len(gen_w_cap) > 0:
+        logger.warning("\n⚠️ Não tem capacidade de energia instalada onde tem geração energia!")
+    else:
+        logger.info("\n✅ Tem capacidade de energia instalada onde tem geração de energia!")
+
+
+    if len(per_w_cap) > 0:
+        logger.warning("⚠️ Não tem capacidade de energia instalada onde tem capacidade de energia per capta!")
+    else:
+        logger.info("\n✅ Tem capacidade de energia instalada onde tem capacidade de energia per capta!")
+
+
+    return df
 
 
 
@@ -136,46 +172,10 @@ def validate_composed_key(df):
         logger.error(f"❌ {duplicates} linhas duplicadas encontradas!")
         logger.debug(f"\nExemplos:\n{df[df.duplicated(subset=key, keep=False)].head()}\n")
     else:
-        logger.info("✅ Chave composta única. Sem duplicatas!\n")    
+        logger.info("✅ Chave composta única. Sem duplicatas!\n")
 
-
-    return df 
-
-
-
-def validate_registers_count(df):
-    logger.info("Validando contagem de registros...")
-    
-    total = len(df)
-    min_expected = 60000
-    
-    if total == 0:
-        logger.error("❌ Dataset vazio! Todas as linhas foram removidas!")
-    elif total < min_expected:
-        logger.warning(f"⚠️ Poucos registros: {total:,} (esperado: >{min_expected:,})")
-    else:
-        logger.info(f"✅ Total de registros: {total:,}")
-    
 
     return df
-
-
-
-def validate_country_count(df):
-    
-    logger.info("\nValidando contagem de países...")
-
-    total_country = df['country'].nunique()
-
-    min_c_expected = 200
-
-    if total_country < min_c_expected:
-        logger.warning(f"⚠️ Poucos países: {total_country} (esperado: >{min_c_expected})")
-    else:
-        logger.info(f"✅ Total de países únicos: {total_country}\n")
-
-
-    return df        
 
 
 
