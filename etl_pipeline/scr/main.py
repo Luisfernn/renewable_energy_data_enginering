@@ -75,3 +75,7 @@ def main():
 
     # Carregamento de dados para o Data Warehouse
     load_data(df)
+
+
+if __name__ == "__main__":
+    main()    
