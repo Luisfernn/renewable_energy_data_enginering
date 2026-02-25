@@ -33,7 +33,7 @@ def normalize_text_columns(df):
         'Sub-Technology': 'sub_technology',
         'Producer Type': 'producer_type',
         'Year': 'year',
-        'Electricity Generation (GWh)': 'eletricity_generation_gwh',
+        'Electricity Generation (GWh)': 'electricity_generation_gwh',
         'Electricity Installed Capacity (MW)': 'eletricity_installed_capacity_mw',
         'Heat Generation (TJ)': 'heat_generation_tj',
         'Public Flows (2022 USD M)': 'total_public_flows_usd_m',
