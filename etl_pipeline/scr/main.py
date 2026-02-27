@@ -13,6 +13,7 @@ from transform.numeric import(
     round_metrics
 )
 from validation import(
+    validate_columns,
     validate_registers_count,
     nulls_year_column,
     validate_regions,
@@ -67,6 +68,7 @@ def main():
         df = round_metrics(df)
 
         logger.info("\n🔍 ETAPA 4/5: VALIDAÇÃO")
+        df = validate_columns(df)
         df = validate_registers_count(df)
         df = nulls_year_column(df)
         df = validate_regions(df)
