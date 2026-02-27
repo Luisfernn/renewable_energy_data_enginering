@@ -48,33 +48,44 @@ def main():
     logger.info("PIPELINE ETL - RENEWABLE ENERGY DATA")
     logger.info("="*60)
 
-    logger.info("\n📥 ETAPA 1/5: EXTRAÇÃO")
-    df = extract_data()
+    try:
 
-    logger.info("\n📝 ETAPA 2/5: TRANSFORMAÇÕES TEXTUAIS")
-    df = normalize_text_columns(df)
-    df = normalize_text_data(df)
-    df = clean_text_data(df)
+        logger.info("\n📥 ETAPA 1/5: EXTRAÇÃO")
+        df = extract_data()
 
-    logger.info("\n🔢 ETAPA 3/5: TRANSFORMAÇÕES NUMÉRICAS")
-    df = clean_numeric_data(df)
-    df = fill_nan_numeric_data(df)
-    df = round_metrics(df)
+        if df is None:
+            raise ValueError("Extração falhou. Df vazio ou None.")
 
-    logger.info("\n🔍 ETAPA 4/5: VALIDAÇÃO")
-    df = validate_registers_count(df)
-    df = nulls_year_column(df)
-    df = validate_regions(df)
-    df = validate_country_count (df)
-    df = generation_without_instaled_capacity(df)
-    df = validate_composed_key(df)
- 
-    logger.info("\n💾 ETAPA 5/5 SALVAMENTO DOS DADOS")
-    df.to_csv(OUTPUT_DIR / 'renewable_energy_data_final.csv', index=False)
-    logger.info("✅ Salvo!")
+        logger.info("\n📝 ETAPA 2/5: TRANSFORMAÇÕES TEXTUAIS")
+        df = normalize_text_columns(df)
+        df = normalize_text_data(df)
+        df = clean_text_data(df)
 
-    # Carregamento de dados para o Data Warehouse
-    load_data(df)
+        logger.info("\n🔢 ETAPA 3/5: TRANSFORMAÇÕES NUMÉRICAS")
+        df = clean_numeric_data(df)
+        df = fill_nan_numeric_data(df)
+        df = round_metrics(df)
+
+        logger.info("\n🔍 ETAPA 4/5: VALIDAÇÃO")
+        df = validate_registers_count(df)
+        df = nulls_year_column(df)
+        df = validate_regions(df)
+        df = validate_country_count (df)
+        df = generation_without_instaled_capacity(df)
+        df = validate_composed_key(df)
+    
+        logger.info("\n💾 ETAPA 5/5 SALVAMENTO DOS DADOS")
+        df.to_csv(OUTPUT_DIR / 'renewable_energy_data_final.csv', index=False)
+        logger.info("✅ Salvo!")
+
+        # Carregamento de dados para o Data Warehouse
+        load_data(df)
+
+    except Exception as e:
+        logger.error(f"❌ Pipeline falhou: {e}")
+        logger.error("="*60)
+        logger.info("Encerrando pipeline devido ao erro.")
+        raise    
 
 
 if __name__ == "__main__":
