@@ -1,6 +1,6 @@
 import pandas as pd
 import logging
-from sqlalchemy import create_engine, text
+from sqlalchemy import text
 from pathlib import Path
 from config import get_engine, chech_connection
 
