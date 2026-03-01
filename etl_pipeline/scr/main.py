@@ -1,5 +1,12 @@
+import sys
+import os
 import logging
 from pathlib import Path
+
+CURRENT_DIR = Path(__file__).resolve().parent
+if str(CURRENT_DIR) not in sys.path:
+    sys.path.insert(0, str(CURRENT_DIR))
+
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -27,7 +34,7 @@ from config import check_connection
 from load import load_data
 
 
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = BASE_DIR / 'data' / 'processed'
 
 LOG_DIR = BASE_DIR / 'data' / 'logs'
