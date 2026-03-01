@@ -6,7 +6,7 @@ from config import get_engine, chech_connection
 
 logger = logging.getLogger(__name__)
 
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 PROCESSED_DIR = BASE_DIR / 'data' / 'processed'
 INPUT_FILE = PROCESSED_DIR / 'renewable_energy_data_final.csv'
 
