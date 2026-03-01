@@ -9,7 +9,7 @@ logger.addHandler(logging.NullHandler())
 logger.propagate = False
 
 load_dotenv() 
-DATABASE_URL = os.getenv("DB_URL")
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 def get_engine():
     """Cria e retorna o engine do SQLAlchemy."""
