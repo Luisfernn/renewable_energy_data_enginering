@@ -21,7 +21,13 @@ from validation import(
     generation_without_instaled_capacity,
     validate_composed_key
 )
+from dotenv import load_dotenv
+from config import check_connection
 from load import load_data
+
+
+load_dotenv()
+
 
 BASE_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = BASE_DIR / 'data' / 'processed'
@@ -51,23 +57,23 @@ def main():
 
     try:
 
-        logger.info("\n📥 ETAPA 1/5: EXTRAÇÃO")
+        logger.info("\n📥 ETAPA 1/6: EXTRAÇÃO")
         df = extract_data()
 
         if df is None:
             raise ValueError("Extração falhou. Df vazio ou None.")
 
-        logger.info("\n📝 ETAPA 2/5: TRANSFORMAÇÕES TEXTUAIS")
+        logger.info("\n📝 ETAPA 2/6: TRANSFORMAÇÕES TEXTUAIS")
         df = normalize_text_columns(df)
         df = normalize_text_data(df)
         df = clean_text_data(df)
 
-        logger.info("\n🔢 ETAPA 3/5: TRANSFORMAÇÕES NUMÉRICAS")
+        logger.info("\n🔢 ETAPA 3/6: TRANSFORMAÇÕES NUMÉRICAS")
         df = clean_numeric_data(df)
         df = fill_nan_numeric_data(df)
         df = round_metrics(df)
 
-        logger.info("\n🔍 ETAPA 4/5: VALIDAÇÃO")
+        logger.info("\n🔍 ETAPA 4/6: VALIDAÇÃO")
         df = validate_columns(df)
         df = validate_registers_count(df)
         df = nulls_year_column(df)
@@ -76,11 +82,11 @@ def main():
         df = generation_without_instaled_capacity(df)
         df = validate_composed_key(df)
     
-        logger.info("\n💾 ETAPA 5/5 SALVAMENTO DOS DADOS")
+        logger.info("\n💾 ETAPA 5/6 SALVAMENTO DOS DADOS")
         df.to_csv(OUTPUT_DIR / 'renewable_energy_data_final.csv', index=False)
         logger.info("✅ Salvo!")
 
-        # Carregamento de dados para o Data Warehouse
+        logger.info("\n💾 ETAPA 6/6 CARREGAMENTO DOS DADOS NO DATA WAREHOUSE")
         load_data(df)
 
     except Exception as e:
