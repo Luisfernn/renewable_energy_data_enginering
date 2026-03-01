@@ -97,4 +97,4 @@ def run_pipeline():
 
 
 if __name__ == "__main__":
-    main()    
+    run_pipeline()    
