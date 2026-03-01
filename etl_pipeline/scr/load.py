@@ -88,7 +88,7 @@ def load_data(df):
     logger.info("📤 INICIANDO CARGA NO DATA WAREHOUSE")
     logger.info("="*60 + "\n")
 
-    if not chech_connection():
+    if not check_connection():
         return
 
     try:
