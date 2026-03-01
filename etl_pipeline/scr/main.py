@@ -10,6 +10,9 @@ if str(CURRENT_DIR) not in sys.path:
 from dotenv import load_dotenv
 load_dotenv()
 
+from config import check_connection
+from load import load_data
+
 from extract import extract_data
 from transform.text import(
     normalize_text_columns,
@@ -30,8 +33,6 @@ from validation import(
     generation_without_instaled_capacity,
     validate_composed_key
 )
-from config import check_connection
-from load import load_data
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
