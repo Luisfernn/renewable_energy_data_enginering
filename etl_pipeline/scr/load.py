@@ -2,14 +2,13 @@ import pandas as pd
 import logging
 from sqlalchemy import create_engine, text
 from pathlib import Path
+from config import get_engine, chech_connection
 
 logger = logging.getLogger(__name__)
 
 BASE_DIR = Path(__file__).resolve().parent
 PROCESSED_DIR = BASE_DIR / 'data' / 'processed'
 INPUT_FILE = PROCESSED_DIR / 'renewable_energy_data_final.csv'
-
-DATABASE_URL = 'postgresql+psycopg2://postgres:postgres123@localhost:5433/renewable_energy'
 
 
 def load_dimensions(df, conn):
@@ -89,11 +88,12 @@ def load_data(df):
     logger.info("📤 INICIANDO CARGA NO DATA WAREHOUSE")
     logger.info("="*60 + "\n")
 
+    if not chech_connection():
+        return
+
     try:
-        # Conecta ao banco
-        logger.info("🔌 Conectando ao PostgreSQL...")
-        engine = create_engine(DATABASE_URL)
-        logger.info("✅ Conectado!\n")
+
+        engine = get_engine()    
 
         with engine.begin() as conn:
             # Limpa tabelas antes de recarregar (evita duplicatas)
@@ -105,10 +105,10 @@ def load_data(df):
             load_dimensions(df, conn)
 
             # Mapeia IDs
-            df = get_ids_dimensions(df, conn)
+            df_with_ids = get_ids_dimensions(df, conn)
 
             # Carrega fato
-            load_fact(df, conn)
+            load_fact(df_with_ids, conn)
         
         logger.info("="*60)
         logger.info("✅ CARGA CONCLUÍDA COM SUCESSO!")
@@ -125,5 +125,8 @@ if __name__ == "__main__":
     logger.addHandler(handler)
     logger.setLevel(logging.INFO)
 
-    df = pd.read_csv(INPUT_FILE)
-    load_data(df)
+    if INPUT_FILE.exists():
+        df = pd.read_csv(INPUT_FILE)
+        load_data(df)
+    else:
+        logger.error(f"❌ Arquivo não encontrado: {INPUT_FILE}")    
