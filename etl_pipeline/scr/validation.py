@@ -141,7 +141,7 @@ def generation_without_instaled_capacity(df):
 
     gen_w_cap = df[(df['electricity_generation_gwh'] > 0) & (df['electricity_installed_capacity_mw'] <= 0)]
     
-    per_w_cap = df[(df['capacity_per_capita_w'] > 0) & (df['electricity_installed_capacity_w'] <= 0)]
+    per_w_cap = df[(df['capacity_per_capita_w'] > 0) & (df['electricity_installed_capacity_mw'] <= 0)]
 
 
     if len(gen_w_cap) > 0:
