@@ -2,7 +2,7 @@ import pandas as pd
 import logging
 from sqlalchemy import text
 from pathlib import Path
-from config import get_engine, chech_connection
+from config import get_engine, check_connection
 
 logger = logging.getLogger(__name__)
 
