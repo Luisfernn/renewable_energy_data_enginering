@@ -1,5 +1,7 @@
 import logging
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv()
 
 from extract import extract_data
 from transform.text import(
@@ -21,12 +23,8 @@ from validation import(
     generation_without_instaled_capacity,
     validate_composed_key
 )
-from dotenv import load_dotenv
 from config import check_connection
 from load import load_data
-
-
-load_dotenv()
 
 
 BASE_DIR = Path(__file__).resolve().parent
