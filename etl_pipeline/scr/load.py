@@ -18,26 +18,26 @@ def load_dimensions(df, conn):
     # dim_country
     logger.info("  → dim_country...")
     df_country = df[['country', 'iso3_code', 'm49_code', 'region', 'sub_region']].drop_duplicates()
-    df_country.to_sql('dim_country', conn, if_exists='append', index=False, chunksize=1000)
+    df_country.to_sql('dim_country', conn, if_exists='append', index=False, chunksize=500)
     logger.info(f"    ✅ {len(df_country)} países inseridos")
 
     # dim_technology
     logger.info("  → dim_technology...")
     df_tech = df[['technology', 'sub_technology', 'group_technology', 'renewable_or_not']].drop_duplicates()
-    df_tech.to_sql('dim_technology', conn, if_exists='append', index=False, chunksize=1000)
+    df_tech.to_sql('dim_technology', conn, if_exists='append', index=False, chunksize=500)
     logger.info(f"    ✅ {len(df_tech)} tecnologias inseridas")
 
     # dim_time
     logger.info("  → dim_time...")
     df_time = df[['year']].drop_duplicates()
     df_time['decade'] = (df_time['year'] // 10) * 10
-    df_time.to_sql('dim_time', conn, if_exists='append', index=False, chunksize=1000)
+    df_time.to_sql('dim_time', conn, if_exists='append', index=False, chunksize=500)
     logger.info(f"    ✅ {len(df_time)} anos inseridos")
 
     # dim_producer
     logger.info("  → dim_producer...")
     df_producer = df[['producer_type']].drop_duplicates()
-    df_producer.to_sql('dim_producer', conn, if_exists='append', index=False, chunksize=1000)
+    df_producer.to_sql('dim_producer', conn, if_exists='append', index=False, chunksize=500)
     logger.info(f"    ✅ {len(df_producer)} tipos de produtor inseridos")
 
     logger.info("✅ Dimensões carregadas!\n")
@@ -77,7 +77,7 @@ def load_fact(df, conn):
     ]]
 
     # Insere
-    df_fact.to_sql('fact_energy_generation', conn, if_exists='append', index=False, chunksize=1000)
+    df_fact.to_sql('fact_energy_generation', conn, if_exists='append', index=False, chunksize=500)
     
     logger.info(f"✅ {len(df_fact)} registros inseridos na tabela fato!\n")
 
