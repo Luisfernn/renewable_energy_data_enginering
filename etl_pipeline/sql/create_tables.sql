@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS fact_energy_generation(
     producer_id INTEGER REFERENCES dim_producer(producer_id),
 
     electricity_generation_gwh NUMERIC(12,2),
-    eletricity_installed_capacity_mw NUMERIC(12,2),
+    electricity_installed_capacity_mw NUMERIC(12,2),
     heat_generation_tj NUMERIC(12,2),
     total_public_flows_usd_m NUMERIC(12,2),
     international_public_flows_usd_m NUMERIC(12,2),

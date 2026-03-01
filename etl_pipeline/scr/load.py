@@ -71,7 +71,7 @@ def load_fact(df, conn):
     # Seleciona apenas colunas necessárias
     df_fact = df[[
         'country_id', 'technology_id', 'time_id', 'producer_id',
-        'electricity_generation_gwh', 'eletricity_installed_capacity_mw', 'heat_generation_tj',
+        'electricity_generation_gwh', 'electricity_installed_capacity_mw', 'heat_generation_tj',
         'total_public_flows_usd_m', 'international_public_flows_usd_m',
         'capacity_per_capita_w'
     ]]

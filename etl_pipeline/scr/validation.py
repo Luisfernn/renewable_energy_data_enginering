@@ -30,7 +30,7 @@ def validate_columns(df):
         'producer_type',
         'year',
         'electricity_generation_gwh',
-        'eletricity_installed_capacity_mw',
+        'electricity_installed_capacity_mw',
         'heat_generation_tj',
         'total_public_flows_usd_m',
         'international_public_flows_usd_m',
@@ -139,9 +139,9 @@ def generation_without_instaled_capacity(df):
 
     logger.info("Verificando se há geração de energia sem capacidade instalada...")
 
-    gen_w_cap = df[(df['electricity_generation_gwh'] > 0) & (df['eletricity_installed_capacity_mw'] <= 0)]
-
-    per_w_cap = df[(df['capacity_per_capita_w'] > 0) & (df['eletricity_installed_capacity_mw'] <= 0)]
+    gen_w_cap = df[(df['electricity_generation_gwh'] > 0) & (df['electricity_installed_capacity_mw'] <= 0)]
+    
+    per_w_cap = df[(df['capacity_per_capita_w'] > 0) & (df['electricity_installed_capacity_mw'] <= 0)]
 
 
     if len(gen_w_cap) > 0:

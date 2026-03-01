@@ -18,7 +18,7 @@ pd.set_option('display.max_columns', None)
 
 metric_columns = [
     'electricity_generation_gwh',
-    'eletricity_installed_capacity_mw',
+    'electricity_installed_capacity_mw',
     'heat_generation_tj',
     'total_public_flows_usd_m',
     'international_public_flows_usd_m',
