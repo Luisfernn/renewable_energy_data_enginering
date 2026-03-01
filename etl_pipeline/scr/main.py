@@ -77,7 +77,7 @@ def run_pipeline():
         df = validate_registers_count(df)
         df = nulls_year_column(df)
         df = validate_regions(df)
-        df = validate_country_count (df)
+        df = validate_country_count(df)
         df = generation_without_instaled_capacity(df)
         df = validate_composed_key(df)
     
