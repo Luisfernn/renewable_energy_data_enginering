@@ -49,7 +49,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def main():
+def run_pipeline():
 
     logger.info("="*60)
     logger.info("PIPELINE ETL - RENEWABLE ENERGY DATA")
