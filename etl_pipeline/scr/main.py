@@ -55,11 +55,12 @@ def run_pipeline():
 
     try:
 
+        logger.info("🔌 Verificando conexão com o Data Warehouse...")
+        if not check_connection():
+            raise ConnectionError("Não foi possível conectar ao banco de dados.")
+
         logger.info("\n📥 ETAPA 1/6: EXTRAÇÃO")
         df = extract_data()
-
-        if df is None:
-            raise ValueError("Extração falhou. Df vazio ou None.")
 
         logger.info("\n📝 ETAPA 2/6: TRANSFORMAÇÕES TEXTUAIS")
         df = normalize_text_columns(df)
