@@ -85,7 +85,7 @@ with DAG(
     # 6. Tarefa única que orquestra suas funções
     etl_task = PythonOperator(
         task_id='run_complete_etl',
-        python_callable=run_full_transformation_and_load
+        python_callable=run_full_pipeline_dag
     )
 
     etl_task
