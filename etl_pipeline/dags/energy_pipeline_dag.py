@@ -1,12 +1,13 @@
-from airflow import DAG
-from airflow.operators.python import PythonOperator
-from datetime import datetime, timedelta
-
 import sys
 import os
 
 # Força a raiz do Airflow no Docker
 sys.path.insert(0, os.path.abspath("/opt/airflow"))
+
+from airflow import DAG
+from airflow.operators.python import PythonOperator
+from datetime import datetime, timedelta
+
 
 try:
     # Importações seguindo a estrutura de pastas
