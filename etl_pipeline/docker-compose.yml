@@ -41,6 +41,7 @@ services:
         max-size: "10m"
         max-file: "3"
     volumes:
+      - .:/opt/airflow
       - ./dags:/opt/airflow/dags
       - ./scr:/opt/airflow/scr
       - ./data:/opt/airflow/data
@@ -62,6 +63,7 @@ services:
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow_password@postgres_airflow/airflow
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
     volumes:
+      - .:/opt/airflow
       - ./dags:/opt/airflow/dags
       - ./scr:/opt/airflow/scr
       - ./data:/opt/airflow/data
