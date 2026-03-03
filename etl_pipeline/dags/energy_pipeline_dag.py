@@ -27,7 +27,7 @@ except ImportError as e:
     from scr.extract import extract_data
     from scr.transform.text import normalize_text_columns, normalize_text_data, clean_text_data
     from scr.transform.numeric import clean_numeric_data, fill_nan_numeric_data, round_metrics
-    from scr.validate import (
+    from scr.validation import (
         validate_columns, validate_registers_count, nulls_year_column,
         validate_regions, validate_country_count, 
         generation_without_instaled_capacity, validate_composed_key
