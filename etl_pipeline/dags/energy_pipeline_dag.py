@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import sys
 import os
 
-sys.path.append('/opt/airflow')
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # 2. Imports das funções originais
 from scr.extract import extract_data
