@@ -1,17 +1,22 @@
 import sys
 import os
 
-# Isso garante que o Python encontre o config.py e a pasta scr
-if '/opt/airflow' not in sys.path:
-    sys.path.insert(0, '/opt/airflow')
+sys.path.insert(0, os.path.abspath("/opt/airflow"))
 
 try:
+    # Tentativa 1: Importação padrão via pacote 'scr'
     from scr.extract import extract_data
-    from scr.transform.text import clean_text_data, normalize_text_columns
-    from scr.transform.numeric import clean_numeric_data, round_metrics
+    from scr.transform.text import normalize_text_columns, normalize_text_data, clean_text_data
+    from scr.transform.numeric import clean_numeric_data, fill_nan_numeric_data, round_metrics
     from scr.load import load_data
 except ImportError as e:
-    raise ImportError(f"Erro de importação no Airflow: {e}. Path atual: {sys.path}")
+    print(f"Aviso: Fallback de importação acionado. Erro: {e}")
+    # Tentativa 2: Importação garantindo o config primeiro
+    import config 
+    from scr.extract import extract_data
+    from scr.transform.text import normalize_text_columns, normalize_text_data, clean_text_data
+    from scr.transform.numeric import clean_numeric_data, fill_nan_numeric_data, round_metrics
+    from scr.load import load_data
 
 # 3. Função Wrapper (Ponte)
 def run_full_transformation_and_load():
