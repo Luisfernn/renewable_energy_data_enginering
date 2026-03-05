@@ -18,8 +18,7 @@ def extract_data(file_path: Path = None):
         file_path = base_dir / 'data' / 'raw' / 'renewable_energy_data_raw.xlsx'
 
     if not file_path.exists():
-        logger.error(f"❌ Arquivo não encontrado: {file_path}")
-        return None
+        raise FileNotFoundError(f"Arquivo não encontrado: {file_path}")
     
 
     # lê o arquivo xlsx
@@ -27,7 +26,7 @@ def extract_data(file_path: Path = None):
         df = pd.read_excel(file_path, sheet_name='Country')
     except Exception as e:
         logger.error(f"⚠️ Erro ao ler o arquivo: {e}")
-        return None
+        raise e
     
 
     # transforma o arquivo xlsx em csv
@@ -35,7 +34,7 @@ def extract_data(file_path: Path = None):
         df.to_csv(base_dir / 'data' / 'raw' / 'renewable_energy_data.csv' , index=False, encoding='utf-8') 
     except Exception as e:
         logger.error(f"⚠️ Erro ao transformar o arquivo: {e} em csv")
-        return None
+        raise e
 
 
     # prévia dos dados
