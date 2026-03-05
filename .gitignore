@@ -1,3 +1,12 @@
+# Airflow - Ignorar resíduos de execução
+logs/
+airflow.cfg
+airflow-webserver.pid
+webserver_config.py
+airflow.db
+unittests.cfg
+.webserver_auth.lock
+
 # Python
 venv/
 __pycache__/
