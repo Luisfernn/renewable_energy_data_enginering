@@ -27,8 +27,10 @@ services:
 
   # --- AIRFLOW WEBSERVER (A interface visual que você quer acessar) ---
   airflow-webserver:
+    build: .
     image: apache/airflow:2.8.1
     container_name: airflow_webserver
+    restart: always
     depends_on:
       - postgres_airflow
     environment:
@@ -54,8 +56,10 @@ services:
 
   # --- AIRFLOW SCHEDULER (O motor que decide quando rodar as tarefas) ---
   airflow-scheduler:
+    build: .
     image: apache/airflow:2.8.1
     container_name: airflow_scheduler
+    restart: always
     depends_on:
       - postgres_airflow
     environment:
