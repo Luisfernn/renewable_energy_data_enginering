@@ -33,5 +33,12 @@ def check_connection():
         return False
 
 
+# Centraliza a lógica do diretório base
+BASE_DIR = Path('/app') if os.path.exists('/app') else Path(__file__).resolve().parent
+DATA_DIR = BASE_DIR / 'data'
+RAW_DIR = DATA_DIR / 'raw'
+PROCESSED_DIR = DATA_DIR / 'processed'        
+
+
 if __name__ == "__main__":
     check_connection()
