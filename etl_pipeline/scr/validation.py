@@ -7,10 +7,8 @@ logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 logger.propagate = False
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-PROCESSED_DIR = BASE_DIR / 'data' / 'processed'
-INPUT_DIR = PROCESSED_DIR / 'renewable_energy_data_clean.csv'
-OUTPUT_PATH = PROCESSED_DIR / 'renewable_energy_data_validated.csv'
+INPUT_DIR = DATA_PROCESSED_DIR / 'renewable_energy_data_clean.csv'
+OUTPUT_PATH = DATA_PROCESSED_DIR / 'renewable_energy_data_validated.csv'
 
 
 def validate_columns(df):
@@ -207,5 +205,5 @@ if __name__ == '__main__':
 
     logger.info("="*60)
     logger.info("✅ TRANSFORMAÇÕES TEXTUAIS CONCLUÍDAS")
-    logger.info(f"📁 Salvo em: data/processed/renewable_energy_data_validated.csv")
+    logger.info(f"📁 Salvo em: {OUTPUT_PATH}")
     logger.info("="*60)

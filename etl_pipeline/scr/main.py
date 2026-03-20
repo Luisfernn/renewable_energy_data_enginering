@@ -34,11 +34,9 @@ from validation import(
     validate_composed_key
 )
 
+OUTPUT_DIR = DATA_PROCESSED_DIR
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-OUTPUT_DIR = BASE_DIR / 'data' / 'processed'
-
-LOG_DIR = BASE_DIR / 'data' / 'logs'
+LOG_DIR = DATA_LOGS_DIR
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 
 

@@ -1,5 +1,6 @@
 import pandas as pd
 from pathlib import Path
+from config import DATA_RAW_DIR, DATA_PROCESSED_DIR
 
 import logging
 
@@ -9,10 +10,8 @@ logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 logger.propagate = False
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
-FILE_PATH = BASE_DIR / 'data' / 'raw' / 'renewable_energy_data.csv'
-PROCESSED_DIR = BASE_DIR / 'data' / 'processed'
-OUTPUT_PATH = PROCESSED_DIR / 'renewable_energy_data_text.csv'
+FILE_PATH = DATA_RAW_DIR / 'renewable_energy_data.csv'
+OUTPUT_PATH = DATA_PROCESSED_DIR / 'renewable_energy_data_text.csv'
 
 # obriga o pandas a mostrar todas as colunas
 pd.set_option('display.max_columns', None) 
@@ -216,5 +215,5 @@ if __name__ == "__main__":
     
     logger.info("="*60)
     logger.info("✅ TRANSFORMAÇÕES TEXTUAIS CONCLUÍDAS")
-    logger.info(f"📁 Salvo em: data/processed/after_textual.csv")
+    logger.info(f"📁 Salvo em: {OUTPUT_PATH}")
     logger.info("="*60)

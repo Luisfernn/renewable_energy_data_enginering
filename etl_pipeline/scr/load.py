@@ -2,14 +2,12 @@ import pandas as pd
 import logging
 from sqlalchemy import text
 from pathlib import Path
+from config import DATA_PROCESSED_DIR
 from config import get_engine, check_connection
 
 logger = logging.getLogger(__name__)
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-PROCESSED_DIR = BASE_DIR / 'data' / 'processed'
-INPUT_FILE = PROCESSED_DIR / 'renewable_energy_data_final.csv'
-
+INPUT_FILE = DATA_PROCESSED_DIR / 'renewable_energy_data_final.csv'
 
 def load_dimensions(df, conn):
 

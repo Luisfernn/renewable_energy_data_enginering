@@ -1,5 +1,6 @@
 import pandas as pd
 from pathlib import Path
+from config import DATA_RAW_DIR, DATA_PROCESSED_DIR
 
 import logging
 
@@ -7,10 +8,8 @@ logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 logger.propagate = False
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
-PROCESSED_DIR = BASE_DIR / 'data' / 'processed'
-INPUT_FILE = PROCESSED_DIR / 'renewable_energy_data_text.csv'
-OUTPUT_PATH = PROCESSED_DIR / 'renewable_energy_data_clean.csv'
+INPUT_FILE = DATA_PROCESSED_DIR / 'renewable_energy_data_text.csv'
+OUTPUT_PATH = DATA_PROCESSED_DIR / 'renewable_energy_data_clean.csv'
 
 pd.set_option('display.max_columns', None)
 
@@ -24,7 +23,6 @@ metric_columns = [
     'international_public_flows_usd_m',
     'capacity_per_capita_w'
 ]
-
 
 
 
@@ -46,7 +44,6 @@ def clean_numeric_data(df):
     logger.debug(f"{df.tail(5)}")
 
     return df
-
 
 
 
@@ -72,7 +69,6 @@ def fill_nan_numeric_data(df):
 
 
 
-
 def round_metrics(df):
 
     for col in metric_columns:
@@ -84,7 +80,6 @@ def round_metrics(df):
     logger.debug(f"{df.tail(5)}")     
 
     return df
-
 
 
 
