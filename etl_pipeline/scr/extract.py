@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 import pandas as pd
 
@@ -9,8 +10,11 @@ logger.propagate = False
 
 def extract_data(file_path: Path = None):
 
-    # path da pasta do projeto 
-    base_dir = Path(__file__).resolve().parent.parent
+    if os.path.exists('/app'):
+        base_dir = Path('/app')
+    else:
+        # path da pasta do projeto 
+        base_dir = Path(__file__).resolve().parent.parent
  
 
     # verifica se o arquivo raw existe
@@ -32,10 +36,13 @@ def extract_data(file_path: Path = None):
 
     # transforma o arquivo xlsx em csv
     try:
-        df.to_csv(base_dir / 'data' / 'raw' / 'renewable_energy_data.csv' , index=False, encoding='utf-8') 
+        csv_path = base_dir / 'data' / 'raw' / 'renewable_energy_data.csv'
+        df.to_csv(csv_path, index=False, encoding='utf-8')
+        logger.info(f"✅ CSV gerado em: {csv_path}")
     except Exception as e:
-        logger.error(f"⚠️ Erro ao transformar o arquivo: {e} em csv")
-        return None
+        logger.error(f"⚠️ Erro ao transformar em csv: {e}")
+        # Mesmo que o CSV falhe, podemos retornar o DF para o pipeline seguir
+        return df
 
 
     # prévia dos dados
