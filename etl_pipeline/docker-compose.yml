@@ -1,18 +1,38 @@
 version: '3.8'
 
 services:
+  # --- O BANCO DE DADOS ---
   postgres:
     image: postgres:15
     container_name: renewable_energy_db
     environment:
-      POSTGRES_DB: renewable_energy
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres123
-      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+      - POSTGRES_DB=renewable_energy
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres123
+      - POSTGRES_INITDB_ARGS=--encoding=UTF8 --locale=C
     ports:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - etl_network
+
+  # --- O SEU SCRIPT DE ETL ---
+  etl_app:
+    build: .
+    container_name: renewable_energy_etl
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres123@postgres:5432/renewable_energy
+    networks:
+      - etl_network
+
+networks:
+  etl_network:
+    driver: bridge
 
 volumes:
   postgres_data:
