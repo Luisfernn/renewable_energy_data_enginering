@@ -1,26 +1,17 @@
-import os
-from pathlib import Path
 import pandas as pd
-
 import logging
+
+from config import DATA_RAW_DIR  
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 logger.propagate = False
 
-def extract_data(file_path: Path = None):
+def extract_data(file_name: str = 'renewable_energy_data_raw.xlsx'):
 
-    if os.path.exists('/app'):
-        base_dir = Path('/app')
-    else:
-        # path da pasta do projeto 
-        base_dir = Path(__file__).resolve().parent.parent
+    file_path = DATA_RAW_DIR / file_name
  
-
     # verifica se o arquivo raw existe
-    if file_path is None:
-        file_path = base_dir / 'data' / 'raw' / 'renewable_energy_data_raw.xlsx'
-
     if not file_path.exists():
         logger.error(f"❌ Arquivo não encontrado: {file_path}")
         return None
@@ -36,7 +27,7 @@ def extract_data(file_path: Path = None):
 
     # transforma o arquivo xlsx em csv
     try:
-        csv_path = base_dir / 'data' / 'raw' / 'renewable_energy_data.csv'
+        csv_path = DATA_RAW_DIR / 'renewable_energy_data.csv'
         df.to_csv(csv_path, index=False, encoding='utf-8')
         logger.info(f"✅ CSV gerado em: {csv_path}")
     except Exception as e:
