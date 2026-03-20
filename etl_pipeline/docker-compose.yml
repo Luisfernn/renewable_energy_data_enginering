@@ -1,5 +1,5 @@
 services:
-  # --- O BANCO DE DADOS ---
+  # --- BANCO DE DADOS ---
   postgres:
     image: postgres:15
     container_name: renewable_energy_db
