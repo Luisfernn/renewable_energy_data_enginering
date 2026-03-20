@@ -1,6 +1,7 @@
 # Manipulação de dados
 pandas==2.1.4
 numpy==1.26.2
+openpyxl
 
 # Banco de dados
 sqlalchemy==2.0.23
