@@ -25,6 +25,7 @@ services:
       - .:/app
     environment:
       - DATABASE_URL_DOCKER=${DATABASE_URL_DOCKER}
+      - PYTHONPATH=/app
     networks:
       - etl_network
 
