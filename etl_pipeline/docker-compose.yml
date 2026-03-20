@@ -4,9 +4,9 @@ services:
     image: postgres:15
     container_name: renewable_energy_db
     environment:
-      - POSTGRES_DB=renewable_energy
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres123
+      - POSTGRES_DB={{DB_NAME}}
+      - POSTGRES_USER={{DB_USER}}
+      - POSTGRES_PASSWORD={{DB_PASS}}
       - POSTGRES_INITDB_ARGS=--encoding=UTF8 --locale=C
     ports:
       - "5433:5432"
@@ -24,7 +24,7 @@ services:
     volumes:
       - .:/app
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres123@postgres:5432/renewable_energy
+      - DATABASE_URL={{DATABASE_URL_DOCKER}}
     networks:
       - etl_network
 
