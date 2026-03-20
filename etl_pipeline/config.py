@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.exc import OperationalError
@@ -34,11 +35,18 @@ def check_connection():
 
 
 # Centraliza a lógica do diretório base
-BASE_DIR = Path('/app') if os.path.exists('/app') else Path(__file__).resolve().parent
-DATA_DIR = BASE_DIR / 'data'
-RAW_DIR = DATA_DIR / 'raw'
-PROCESSED_DIR = DATA_DIR / 'processed'        
+if os.path.exists('/app'):
+    BASE_DIR = Path('/app')
+else:
+    BASE_DIR = Path(__file__).resolve().parent
 
+# Atalhos globais para as pastas
+DATA_RAW_DIR = BASE_DIR / 'data' / 'raw'
+DATA_PROCESSED_DIR = BASE_DIR / 'data' / 'processed'
+
+# Garante que as pastas existam (evita erros de "Folder not found")
+DATA_RAW_DIR.mkdir(parents=True, exist_ok=True)
+DATA_PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
 if __name__ == "__main__":
     check_connection()
