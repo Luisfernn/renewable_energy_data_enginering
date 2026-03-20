@@ -1,0 +1,16 @@
+# Ignorar pastas de logs do Airflow ou sistema
+logs/
+logs/*
+
+# Ignorar ambientes virtuais
+venv/
+.venv/
+
+# Ignorar cache do Python
+__pycache__/
+*.pyc
+
+# Ignorar o próprio Git e OneDrive
+.git
+.gitignore
+.env
