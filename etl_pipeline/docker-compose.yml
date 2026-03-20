@@ -15,7 +15,7 @@ services:
     networks:
       - etl_network
 
-  # --- O SEU SCRIPT DE ETL ---
+  # --- ETL ---
   etl_app:
     build: .
     container_name: renewable_energy_etl
