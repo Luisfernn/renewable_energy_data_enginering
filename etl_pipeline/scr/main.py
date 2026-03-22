@@ -5,6 +5,16 @@ load_dotenv()
 
 from config import DATA_PROCESSED_DIR, DATA_LOGS_DIR, check_connection
 
+logging.basicConfig(
+    level = logging.INFO,
+    format='%(asctime)s | %(levelname)s | %(message)s',
+    handlers=[
+        logging.FileHandler(DATA_LOGS_DIR / "etl.log", mode="a", encoding="utf-8"),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
+
 from load import load_data
 from extract import extract_data
 
@@ -27,19 +37,6 @@ from validation import(
     generation_without_instaled_capacity,
     validate_composed_key
 )
-
-
-logging.basicConfig(
-    level = logging.INFO,
-    format='%(asctime)s | %(levelname)s | %(message)s',
-    handlers=[
-        logging.FileHandler(DATA_LOGS_DIR / "etl.log", mode="a", encoding="utf-8"),
-        logging.StreamHandler()
-    ]
-)
-
-
-logger = logging.getLogger(__name__)
 
 
 def run_pipeline():
