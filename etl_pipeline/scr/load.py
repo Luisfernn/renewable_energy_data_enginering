@@ -80,6 +80,23 @@ def load_fact(df, conn):
     logger.info(f"✅ {len(df_fact)} registros inseridos na tabela fato!\n")
 
 
+
+def create_tables_from_sql(conn):
+    """Garante que as tabelas existam antes de qualquer operação"""
+    # Se o load.py está em /app/scr/ e o sql em /app/
+    sql_path = Path(__file__).parent.parent / 'create_tables.sql'
+    
+    if sql_path.exists():
+        with open(sql_path, 'r', encoding='utf-8') as f:
+            sql_commands = f.read()
+        conn.execute(text(sql_commands))
+        logger.info("✅ Estrutura de tabelas verificada.")
+    else:
+        logger.error(f"❌ Arquivo SQL não encontrado em: {sql_path}")
+        raise FileNotFoundError("create_tables.sql é obrigatório.")
+
+
+
 def load_data(df):
     """Pipeline completo de carga"""
     logger.info("="*60)
