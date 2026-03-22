@@ -84,7 +84,7 @@ def load_fact(df, conn):
 def create_tables_from_sql(conn):
     """Garante que as tabelas existam antes de qualquer operação"""
     # Se o load.py está em /app/scr/ e o sql em /app/
-    sql_path = Path(__file__).parent.parent / 'create_tables.sql'
+    sql_path = Path(__file__).parent.parent / 'sql' / 'create_tables.sql'
     
     if sql_path.exists():
         with open(sql_path, 'r', encoding='utf-8') as f:
@@ -93,7 +93,7 @@ def create_tables_from_sql(conn):
         logger.info("✅ Estrutura de tabelas verificada.")
     else:
         logger.error(f"❌ Arquivo SQL não encontrado em: {sql_path}")
-        raise FileNotFoundError("create_tables.sql é obrigatório.")
+        raise FileNotFoundError(f"Não encontrei o arquivo em {sql_path.absolute()}")
 
 
 
