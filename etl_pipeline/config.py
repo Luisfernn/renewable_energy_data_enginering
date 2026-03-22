@@ -11,6 +11,24 @@ logger.propagate = False
 
 load_dotenv() 
 
+
+# Centraliza a lógica do diretório base
+if os.path.exists('/app'):
+    BASE_DIR = Path('/app')
+else:
+    BASE_DIR = Path(__file__).resolve().parent
+
+
+# Atalhos globais para as pastas
+DATA_RAW_DIR = BASE_DIR / 'data' / 'raw'
+DATA_PROCESSED_DIR = BASE_DIR / 'data' / 'processed'
+DATA_LOGS_DIR = BASE_DIR / 'data' / 'logs'
+
+# Garante que TODAS as pastas existam
+for folder in [DATA_RAW_DIR, DATA_PROCESSED_DIR, DATA_LOGS_DIR]:
+    folder.mkdir(parents=True, exist_ok=True)
+
+
 def get_engine():
     url = os.getenv("DATABASE_URL")
 
@@ -19,6 +37,7 @@ def get_engine():
     # Se o Docker injetar a variável DATABASE_URL_DOCKER, usamos ela, caso contrário, usamos a do .env (localhost)
 
     return create_engine(url)
+
 
 def check_connection():
     """Testa se o banco está online e acessível."""
@@ -33,20 +52,6 @@ def check_connection():
         logger.warning(f"👉 Detalhe técnico: {e}")
         return False
 
-
-# Centraliza a lógica do diretório base
-if os.path.exists('/app'):
-    BASE_DIR = Path('/app')
-else:
-    BASE_DIR = Path(__file__).resolve().parent
-
-# Atalhos globais para as pastas
-DATA_RAW_DIR = BASE_DIR / 'data' / 'raw'
-DATA_PROCESSED_DIR = BASE_DIR / 'data' / 'processed'
-
-# Garante que as pastas existam (evita erros de "Folder not found")
-DATA_RAW_DIR.mkdir(parents=True, exist_ok=True)
-DATA_PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
 if __name__ == "__main__":
     check_connection()
