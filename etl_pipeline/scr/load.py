@@ -112,11 +112,6 @@ def load_data(df):
 
             create_tables_from_sql(conn)
 
-            # Limpa tabelas antes de recarregar (evita duplicatas)
-            logger.info("🗑️  Limpando tabelas...")
-            conn.execute(text("TRUNCATE TABLE fact_energy_generation, dim_country, dim_technology, dim_time, dim_producer RESTART IDENTITY CASCADE"))
-            logger.info("✅ Tabelas limpas!\n")
-
             logger.info("🗑️  Limpando dados antigos...")
             conn.execute(text("""
                 TRUNCATE TABLE 
