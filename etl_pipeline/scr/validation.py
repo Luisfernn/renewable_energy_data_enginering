@@ -1,5 +1,6 @@
 import pandas as pd
 from pathlib import Path
+from config import DATA_PROCESSED_DIR
 
 import logging
 
