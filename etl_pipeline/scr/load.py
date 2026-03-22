@@ -103,26 +103,29 @@ def load_data(df):
     logger.info("📤 INICIANDO CARGA NO DATA WAREHOUSE")
     logger.info("="*60 + "\n")
 
-    if not check_connection():
-        return
+    if not check_connection(): return
+
+    engine = get_engine()
 
     try:
-
-        engine = get_engine()    
-
         with engine.begin() as conn:
+
+            create_tables_from_sql(conn)
+
             # Limpa tabelas antes de recarregar (evita duplicatas)
             logger.info("🗑️  Limpando tabelas...")
             conn.execute(text("TRUNCATE TABLE fact_energy_generation, dim_country, dim_technology, dim_time, dim_producer RESTART IDENTITY CASCADE"))
             logger.info("✅ Tabelas limpas!\n")
 
-            # Carrega dimensões
+            logger.info("🗑️  Limpando dados antigos...")
+            conn.execute(text("""
+                TRUNCATE TABLE 
+                fact_energy_generation, dim_country, dim_technology, dim_time, dim_producer 
+                RESTART IDENTITY CASCADE
+            """))
+
             load_dimensions(df, conn)
-
-            # Mapeia IDs
             df_with_ids = get_ids_dimensions(df, conn)
-
-            # Carrega fato
             load_fact(df_with_ids, conn)
         
         logger.info("="*60)
@@ -130,9 +133,9 @@ def load_data(df):
         logger.info("="*60)
         
     except Exception as e:
-        logger.error(f"❌ Erro na carga: {e}")
+        logger.error(f"❌ Erro na carga. O banco permanece como estava antes.")
+        logger.error(f"⚠️ Detalhe: {e}")
         raise
-
 
 if __name__ == "__main__":
     handler = logging.StreamHandler()
