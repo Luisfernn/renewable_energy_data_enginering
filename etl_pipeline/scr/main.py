@@ -2,12 +2,9 @@ import sys
 import os
 import logging
 from pathlib import Path
-
-CURRENT_DIR = Path(__file__).resolve().parent
-if str(CURRENT_DIR) not in sys.path:
-    sys.path.insert(0, str(CURRENT_DIR))
-
+from config import DATA_PROCESSED_DIR, DATA_LOGS_DIR, check_connectio
 from dotenv import load_dotenv
+
 load_dotenv()
 
 from config import check_connection
@@ -33,11 +30,6 @@ from validation import(
     generation_without_instaled_capacity,
     validate_composed_key
 )
-
-OUTPUT_DIR = DATA_PROCESSED_DIR
-
-LOG_DIR = DATA_LOGS_DIR
-LOG_DIR.mkdir(parents=True, exist_ok=True)
 
 
 logging.basicConfig(
@@ -67,6 +59,8 @@ def run_pipeline():
 
         logger.info("\n📥 ETAPA 1/6: EXTRAÇÃO")
         df = extract_data()
+        if df is None or df.empty:
+            raise ValueError("A extração retornou um DataFrame vazio ou None.") 
 
         logger.info("\n📝 ETAPA 2/6: TRANSFORMAÇÕES TEXTUAIS")
         df = normalize_text_columns(df)
@@ -88,8 +82,8 @@ def run_pipeline():
         df = validate_composed_key(df)
     
         logger.info("\n💾 ETAPA 5/6 SALVAMENTO DOS DADOS")
-        df.to_csv(OUTPUT_DIR / 'renewable_energy_data_final.csv', index=False)
-        logger.info("✅ Salvo!")
+        df.to_csv(DATA_PROCESSED_DIR / 'renewable_energy_data_final.csv', index=False)
+        logger.info(f"✅ Arquivo final salvo em {DATA_PROCESSED_DIR}")
 
         logger.info("\n💾 ETAPA 6/6 CARREGAMENTO DOS DADOS NO DATA WAREHOUSE")
         load_data(df)
