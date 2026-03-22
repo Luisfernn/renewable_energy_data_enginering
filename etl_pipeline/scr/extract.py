@@ -5,7 +5,6 @@ from config import DATA_RAW_DIR
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
-logger.propagate = False
 
 def extract_data(file_name: str = 'renewable_energy_data_raw.xlsx'):
 

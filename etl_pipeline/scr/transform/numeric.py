@@ -6,7 +6,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
-logger.propagate = False
 
 INPUT_FILE = DATA_PROCESSED_DIR / 'renewable_energy_data_text.csv'
 OUTPUT_PATH = DATA_PROCESSED_DIR / 'renewable_energy_data_clean.csv'
