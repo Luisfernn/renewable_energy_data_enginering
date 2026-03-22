@@ -1,16 +1,13 @@
-import sys
-import os
 import logging
-from pathlib import Path
-from config import DATA_PROCESSED_DIR, DATA_LOGS_DIR, check_connectio
 from dotenv import load_dotenv
 
 load_dotenv()
 
-from config import check_connection
-from load import load_data
+from config import DATA_PROCESSED_DIR, DATA_LOGS_DIR, check_connection
 
+from load import load_data
 from extract import extract_data
+
 from transform.text import(
     normalize_text_columns,
     normalize_text_data,
@@ -36,7 +33,7 @@ logging.basicConfig(
     level = logging.INFO,
     format='%(asctime)s | %(levelname)s | %(message)s',
     handlers=[
-        logging.FileHandler(LOG_DIR / "etl.log", mode="a", encoding="utf-8"),
+        logging.FileHandler(DATA_LOGS_DIR / "etl.log", mode="a", encoding="utf-8"),
         logging.StreamHandler()
     ]
 )
