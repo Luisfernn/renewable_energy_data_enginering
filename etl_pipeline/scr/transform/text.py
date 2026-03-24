@@ -16,8 +16,23 @@ OUTPUT_PATH = DATA_PROCESSED_DIR / 'renewable_energy_data_text.csv'
 pd.set_option('display.max_columns', None) 
 
 
-# normalização dos nomes das colunas
 def normalize_text_columns(df):
+    """
+    Normaliza os nomes das colunas do DataFrame.
+
+    A função renomeia os nomes das colunas para um formato mais consistente e padronizado, pensando em:
+    - melhorar a legibilidade dos nomes das colunas, tornando-os mais intuitivos e fáceis de entender.
+    - facilitar a manipulação dos dados na etapas seguintes do pipeline.
+    - facilitar as análises futuras
+    - não ter conflitos no banco de dados, evitando caracteres especiais e espaços que podem causar problemas.
+    
+
+    Args:
+        df (pd.DataFrame): O DataFrame original direto da extração.
+
+    Returns:
+        pd.DataFrame: O DataFrame com os nomes das colunas normalizados.
+    """
 
     normalized_columns={
         'Region': 'region',
@@ -53,6 +68,8 @@ def normalize_text_columns(df):
 
 
 def apply_text_rules(df):
+    """Aplica regras de texto como remoção de caracteres especiais e padronização de valores específicos em colunas textuais."""
+
 
     detail_col = ['technology', 'sub_technology']
 
@@ -87,8 +104,21 @@ def apply_text_rules(df):
 
 
 
-# normaliza dados de colunas textuais
 def normalize_text_data(df):
+    """
+    Normaliza os dados textuais do DataFrame
+
+    A função aplica as seguintes transformações:
+    - Padroniza os nomes próprios (region, sub_region, country) para título (ex: "United States") e remove espaços em branco.
+    - Padroniza o código ISO3 para maiúsculas e sem espaços vazios.
+    - Padroniza as categorias (renewable_or_not, group_technology, technology, sub_technology, producer_type) para minúsculas, sem caracteres especiais e sem espaços vazios.
+    - Aplica regras específicas de padronização de texto, como remoção de "total " e mais caracteres especiais.
+
+    Args:
+        df (pd.DataFrame): O DataFrame com os dados textuais a serem normalizados.
+    Returns:
+        pd.DataFrame: O DataFrame com os dados textuais normalizados.    
+    """
 
     # nomes próprios
     locations_columns = ['region', 'sub_region', 'country'] 
@@ -135,8 +165,20 @@ def normalize_text_data(df):
 
 
 def clean_text_data(df):
+    """
+    Remove registros com valores nulos ou inválidos em colunas críticas.
 
- #remove linhas em registros nas colunas críticas
+    As colunas críticas são aquelas que trazem informações essenciais para a análise, como 'country', 'year' e 'technology'.
+    Para uma linha ser considerada válida, é necessário que as 3 colunas estejam preenchidas.
+    Limpezas realizadas nesta função:
+    - Remove registros sem valores nas colunas críticas, possuí contagem de quantos registros foram removidos ao total.
+    - Remove registros com valores inválidos antes já mapeados da coluna 'country', possuí contagem de quantos registros foram removidos ao total.
+
+    Args:
+        df (pd.DataFrame): O DataFrame com os dados textuais a serem limpos.
+    Returns:
+        pd.DataFrame: O DataFrame com os registros inválidos removidos, mantendo apenas aqueles com identificação completa e válida.    
+    """
     critic_columuns = ['country', 'year', 'technology']
 
     before = len(df)

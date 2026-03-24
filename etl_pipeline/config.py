@@ -30,6 +30,16 @@ for folder in [DATA_RAW_DIR, DATA_PROCESSED_DIR, DATA_LOGS_DIR]:
 
 
 def get_engine():
+    """
+    Cria a engine de conexão com o banco de dados via SQLAlchemy.
+
+    A função prioriza a URL de conexão do Docker (DATABASE_URL_DOCKER) se disponível,
+    caindo para a URL local (DATABASE_URL) caso contrário. Isso permite que o 
+    pipeline seja executado de forma transparente em diferentes ambientes.
+
+    Returns:
+        sqlalchemy.engine.Engine: Objeto de conexão configurado para o PostgreSQL.
+    """
     url = os.getenv("DATABASE_URL")
 
     url = os.getenv("DATABASE_URL_DOCKER", url)

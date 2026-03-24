@@ -26,7 +26,21 @@ metric_columns = [
 
 
 def clean_numeric_data(df):
+    """
+    Realiza a limpeza de integridade numérica dos dados.
 
+    Aplica as seguintes regras:
+    1. Remove registros onde o ano ('year') esteja ausente, pois o ano é fundamental para a análise temporal.
+    2. Remove registros que não tenham pelo menos uma das colunas métricas preenchidas com um valor diferente de zero e nulo,
+    garantindo que apenas os registros tenham de fato algum dado energético relevante persistam.
+
+    Args:
+        df (pd.DataFrame): O DataFrame original com dados de energia renovável.
+
+    Returns:
+        pd.DataFrame: DataFrame filtrado, contendo apenas registros com ano 
+                     e pelo menos uma métrica válida.
+    """
     
     before = len(df)
 
@@ -47,6 +61,19 @@ def clean_numeric_data(df):
 
 
 def fill_nan_numeric_data(df):
+    """
+    Preenche valores nulos em colunas numéricas com zero.
+
+    Para uma linha ser válida é necessário somente que uma das colunas métricas esteja
+    preenchida, com isso podem existir colunas vazias ou nulas, para evitar problemas em análises futuras,
+    essas células serão preenchidas com zero.
+
+    Args:
+        df (pd.DataFrame): O DataFrame com colunas numéricas a serem tratadas.
+
+    Returns:
+        pd.DataFrame: O DataFrame com colunas métricas nulas preenchidas com 0.
+    """
 
     nans_before = df[metric_columns].isna().sum().sum()
 
@@ -69,6 +96,7 @@ def fill_nan_numeric_data(df):
 
 
 def round_metrics(df):
+    """Arredonda as colunas métricas para duas casas decimais para padronização."""
 
     for col in metric_columns:
         if col in df.columns:

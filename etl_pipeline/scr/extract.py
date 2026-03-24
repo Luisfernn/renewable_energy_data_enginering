@@ -7,6 +7,7 @@ logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 
 def extract_data(file_name: str = 'renewable_energy_data_raw.xlsx'):
+    """Realiza a extração dos dados do arquivo xlsx e converte para csv."""
 
     file_path = DATA_RAW_DIR / file_name
  

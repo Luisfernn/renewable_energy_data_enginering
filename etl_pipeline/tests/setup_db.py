@@ -9,6 +9,7 @@ BASE_DIR = Path(__file__).parent
 SQL_FILE = BASE_DIR / 'sql' / 'create_tables.sql'
 
 def create_tables():
+    """ Lê o arquivo SQL e executa os comandos para criar as tabelas necessárias no PostgreSQL."""
     print("🔧 Criando tabelas no PostgreSQL...")
     
     try:

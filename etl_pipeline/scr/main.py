@@ -40,6 +40,19 @@ from validation import(
 
 
 def run_pipeline():
+    """
+    Executa o fluxo completo de ETL.
+
+    Coordena a extração de dados brutos, a aplicação de múltiplas camadas de 
+    transformação (limpeza e padronização) e a carga final em um modelo Star Schema.
+    
+    O pipeline garante a integridade dos dados através de validações de chaves 
+    compostas e garante a atomicidade da carga no banco de dados.
+
+    Raises:
+        Exception: Captura falhas em qualquer etapa do processo, 
+                   interrompendo a execução e registrando o erro no log.
+    """
 
     logger.info("="*60)
     logger.info("PIPELINE ETL - RENEWABLE ENERGY DATA")

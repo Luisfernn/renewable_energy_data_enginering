@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 INPUT_FILE = DATA_PROCESSED_DIR / 'renewable_energy_data_final.csv'
 
 def load_dimensions(df, conn):
+    """Extrai e carrega as tabelas de dimensão garantindo a unicidade dos registros (Drop Duplicates)."""
 
     logger.info("Carregando dimensões...")
 
@@ -42,6 +43,7 @@ def load_dimensions(df, conn):
 
 
 def get_ids_dimensions(df, conn):
+    """Converte atributos textuais em IDs numéricos via lookup nas tabelas de dimensão, preparando o esquema para a tabela fato."""
 
     logger.info("Mapeando IDs das dimensões...")
 
@@ -63,6 +65,7 @@ def get_ids_dimensions(df, conn):
 
 
 def load_fact(df, conn):
+    """ Carrega a tabela fato com os dados de geração de energia, utilizando os IDs das dimensões e as métricas numéricas."""
 
     logger.info("Carregando tabela fato...")
 
@@ -82,7 +85,7 @@ def load_fact(df, conn):
 
 
 def create_tables_from_sql(conn):
-    """Garante que as tabelas existam antes de qualquer operação"""
+    """Garante que as tabelas existam antes de qualquer operação."""
     # Se o load.py está em /app/scr/ e o sql em /app/
     sql_path = Path(__file__).parent.parent / 'sql' / 'create_tables.sql'
     
@@ -98,7 +101,7 @@ def create_tables_from_sql(conn):
 
 
 def load_data(df):
-    """Pipeline completo de carga"""
+    """Orquestra a carga completa no DW, garantindo que dimensões e fato sejam inseridas em uma única transação (All-or-Nothing)."""
     logger.info("="*60)
     logger.info("📤 INICIANDO CARGA NO DATA WAREHOUSE")
     logger.info("="*60 + "\n")

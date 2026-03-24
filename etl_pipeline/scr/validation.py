@@ -12,6 +12,7 @@ OUTPUT_PATH = DATA_PROCESSED_DIR / 'renewable_energy_data_validated.csv'
 
 
 def validate_columns(df):
+    """ Valida a presença e a ordem correta das colunas esperadas, garantindo a integridade estrutural do DataFrame."""
 
     logger.info("Iniciando validação de colunas...")
 
@@ -57,6 +58,8 @@ def validate_columns(df):
 
 
 def validate_registers_count(df):
+    """ Valida a contagem total de registros, garantindo que o dataset não esteja vazio ou com um número anormalmente baixo de linhas."""
+
     logger.info("Validando contagem de registros...")
 
     total = len(df)
@@ -75,6 +78,7 @@ def validate_registers_count(df):
 
 
 def nulls_year_column(df):
+    """ Verifica a presença de valores nulos na coluna 'year', que é crítica para análises temporais, e registra a quantidade encontrada."""
 
     logger.info("Verificando valores nulls na coluna year...")
 
@@ -91,6 +95,7 @@ def nulls_year_column(df):
 
 
 def validate_regions(df):
+    """ Valida os valores da coluna 'region' contra uma lista de regiões geográficas reconhecidas, garantindo a consistência dos dados regionais."""
 
     logger.info("Verificando se há registros com região inválida...")
 
@@ -116,6 +121,7 @@ def validate_regions(df):
 
 
 def validate_country_count(df):
+    """ Valida a contagem de países únicos, garantindo que o dataset contenha uma diversidade geográfica adequada para análises globais."""
 
     logger.info("Validando contagem de países...")
 
@@ -134,6 +140,23 @@ def validate_country_count(df):
 
 
 def generation_without_instaled_capacity(df):
+    """
+    Compara a geração/capacidade de energia com a capacidade instalada para identificar inconsistências.
+    
+    Faz essas duas validações:
+    1. Verifica se existe capacidade de energia instalada onde há geração de energia.
+    2. Verifica se existe capacidade de energia instalada onde há capacidade de energia per capta.
+
+    Ambas as validações são importantes para assegurar a qualidade dos dados, pois é esperado que haja capacidade instalada sempre que houver geração de energia ou capacidade per capta registrada.
+    Registros que apresentarem geração ou capacidade per capta sem capacidade instalada podem indicar erros de entrada de dados ou inconsistências que precisam ser investigadas.
+    O resultado dessas validações é registrado no log, destacando quaisquer inconsistências encontradas para posterior análise e correção.
+
+    Args:
+        df (pd.DataFrame): O DataFrame contendo os dados de energia renovável a serem investigados.
+    Returns:
+        pd.DataFrame: O mesmo DataFrame, sem modificações, mas com logs detalhados sobre as inconsistências encontradas entre geração/capacidade e capacidade instalada.    
+    """ 
+
 
     logger.info("Verificando se há geração de energia sem capacidade instalada...")
 
@@ -159,6 +182,7 @@ def generation_without_instaled_capacity(df):
 
 
 def validate_composed_key(df):
+    """Verifica e reporta duplicatas na chave composta (country, year, technology, sub_technology, producer_type)."""
 
     logger.info("Verificando se há duplicatas...")
 
