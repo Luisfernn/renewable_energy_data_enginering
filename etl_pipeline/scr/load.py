@@ -9,6 +9,7 @@ logger = logging.getLogger(__name__)
 
 INPUT_FILE = DATA_PROCESSED_DIR / 'renewable_energy_data_final.csv'
 
+
 def load_dimensions(df, conn):
     """Extrai e carrega as tabelas de dimensão garantindo a unicidade dos registros (Drop Duplicates)."""
 
@@ -134,6 +135,8 @@ def load_data(df):
         logger.error(f"❌ Erro na carga. O banco permanece como estava antes.")
         logger.error(f"⚠️ Detalhe: {e}")
         raise
+
+
 
 if __name__ == "__main__":
     handler = logging.StreamHandler()

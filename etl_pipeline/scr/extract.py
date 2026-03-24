@@ -6,6 +6,7 @@ from config import DATA_RAW_DIR
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 
+
 def extract_data(file_name: str = 'renewable_energy_data_raw.xlsx'):
     """Realiza a extração dos dados do arquivo xlsx e converte para csv."""
 
@@ -49,7 +50,7 @@ def extract_data(file_name: str = 'renewable_energy_data_raw.xlsx'):
     return df
 
 
-# logger.info só funciona em execução local do script
+
 if __name__ == "__main__":
 
     handler = logging.StreamHandler()

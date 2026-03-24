@@ -13,7 +13,6 @@ OUTPUT_PATH = DATA_PROCESSED_DIR / 'renewable_energy_data_clean.csv'
 pd.set_option('display.max_columns', None)
 
 
-
 metric_columns = [
     'electricity_generation_gwh',
     'electricity_installed_capacity_mw',
@@ -116,7 +115,7 @@ if __name__ == "__main__":
     handler.setFormatter(logging.Formatter("%(message)s"))
     logger.addHandler(handler)
     logger.setLevel(logging.DEBUG)
-    # logger.setLevel(logging.INFO) 
+    #logger.setLevel(logging.INFO) 
 
     logger.info("="*60)
     logger.info("🚀 INICIANDO TRANSFORMAÇÕES NUMÉRICAS")

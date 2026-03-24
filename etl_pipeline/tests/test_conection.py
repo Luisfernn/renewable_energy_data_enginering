@@ -2,6 +2,7 @@ from sqlalchemy import create_engine, text
 
 DATABASE_URL = "postgresql+psycopg2://postgres:postgres123@localhost:5433/renewable_energy"
 
+
 try:
     engine = create_engine(DATABASE_URL)
 

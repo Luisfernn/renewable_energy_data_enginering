@@ -9,6 +9,7 @@ logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 logger.propagate = False
 
+
 load_dotenv() 
 
 
@@ -23,6 +24,7 @@ else:
 DATA_RAW_DIR = BASE_DIR / 'data' / 'raw'
 DATA_PROCESSED_DIR = BASE_DIR / 'data' / 'processed'
 DATA_LOGS_DIR = BASE_DIR / 'data' / 'logs'
+
 
 # Garante que TODAS as pastas existam
 for folder in [DATA_RAW_DIR, DATA_PROCESSED_DIR, DATA_LOGS_DIR]:
@@ -49,6 +51,7 @@ def get_engine():
     return create_engine(url)
 
 
+
 def check_connection():
     """Testa se o banco está online e acessível."""
     engine = get_engine()
@@ -61,6 +64,7 @@ def check_connection():
         logger.error("❌ ERRO: Não foi possível conectar ao banco de dados.")
         logger.warning(f"👉 Detalhe técnico: {e}")
         return False
+
 
 
 if __name__ == "__main__":

@@ -4,8 +4,6 @@ from config import DATA_RAW_DIR, DATA_PROCESSED_DIR
 
 import logging
 
-
-# configs de logger
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 
@@ -232,14 +230,13 @@ def clean_text_data(df):
 
 
 
-# logger.info só funciona em execução local do script
 if __name__ == "__main__":
 
     handler = logging.StreamHandler()
     handler.setFormatter(logging.Formatter("%(message)s"))
     logger.addHandler(handler)
     logger.setLevel(logging.DEBUG)
-    # logger.setLevel(logging.INFO) 
+    #logger.setLevel(logging.INFO) 
 
     logger.info("="*60)
     logger.info("🚀 INICIANDO TRANSFORMAÇÕES TEXTUAIS")

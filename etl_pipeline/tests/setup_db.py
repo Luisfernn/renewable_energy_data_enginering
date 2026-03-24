@@ -8,6 +8,7 @@ DATABASE_URL = 'postgresql+psycopg2://postgres:postgres123@localhost:5433/renewa
 BASE_DIR = Path(__file__).parent
 SQL_FILE = BASE_DIR / 'sql' / 'create_tables.sql'
 
+
 def create_tables():
     """ Lê o arquivo SQL e executa os comandos para criar as tabelas necessárias no PostgreSQL."""
     print("🔧 Criando tabelas no PostgreSQL...")
@@ -30,6 +31,8 @@ def create_tables():
         
     except Exception as e:
         print(f"❌ Erro ao criar tabelas: {e}")
+
+
 
 if __name__ == "__main__":
     create_tables()
