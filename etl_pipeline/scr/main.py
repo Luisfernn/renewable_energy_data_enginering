@@ -15,11 +15,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-for module_name in ["extract", "load", "transform", "validation"]:
-    logging.getLogger(module_name).setLevel(logging.INFO)
-    # Garante que os filhos também herdem isso
-    logging.getLogger(module_name).propagate = True
-
 from load import load_data
 from extract import extract_data
 

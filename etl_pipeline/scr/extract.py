@@ -36,14 +36,14 @@ def extract_data(file_name: str = 'renewable_energy_data_raw.xlsx'):
 
 
     # prévia dos dados
-    logger.info(f"\n✅ Arquivo carregado com sucesso: {file_path.name}")
-    logger.info(f"📊 Linhas: {len(df)}, Colunas {len(df.columns)}\n")
+    logger.debug(f"\n✅ Arquivo carregado com sucesso: {file_path.name}")
+    logger.debug(f"📊 Linhas: {len(df)}, Colunas {len(df.columns)}\n")
 
-    logger.info("Prévia das 10 primeiras linhas:\n")
-    logger.info(f"{df.head(10)}\n")
+    logger.debug("Prévia das 10 primeiras linhas:\n")
+    logger.debug(f"{df.head(10)}\n")
 
-    logger.info("Prévia das últimas 10 linhas:\n")
-    logger.info(f"{df.tail(10)}\n")
+    logger.debug("Prévia das últimas 10 linhas:\n")
+    logger.debug(f"{df.tail(10)}\n")
 
     return df
 
