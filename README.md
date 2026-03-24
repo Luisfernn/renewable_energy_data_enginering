@@ -6,7 +6,7 @@ Pipeline ETL para processamento de dados de energia renovável da [IRENA](https:
  
 ## 📋 Sobre o Projeto
  
-Este projeto foi desenvolvido como portfólio profissional em Engenharia de Dados. O pipeline extrai dados públicos de energia renovável da IRENA, realiza transformações estruturadas e carrega os resultados em um banco de dados PostgreSQL — tudo orquestrado via Docker.
+Este projeto foi desenvolvido como portfólio profissional em Engenharia de Dados. O pipeline extrai dados públicos de energia renovável da IRENA, realiza transformações estruturadas e carrega os resultados em um banco de dados PostgreSQL orquestrado via Docker.
  
 O objetivo é demonstrar domínio de práticas reais do mercado: código limpo e modular, logging estruturado, commits convencionais, separação de responsabilidades e ambiente reproducível com containers.
  
@@ -46,13 +46,7 @@ renewable_energy_data_enginering/
 │   │   ├── logs/
 │   │   │   └── etl.log
 │   │   ├── processed/
-│   │   │   ├── renewable_energy_data_clean.csv
-│   │   │   ├── renewable_energy_data_final.csv
-│   │   │   ├── renewable_energy_data_text.csv
-│   │   │   └── renewable_energy_data_valida.csv
 │   │   └── raw/
-│   │       ├── renewable_energy_data_raw.xlsx
-│   │       └── renewable_energy_data.csv
 │   ├── scr/
 │   │   ├── transform/
 │   │   │   ├── numeric.py
@@ -141,7 +135,7 @@ python etl_pipeline/main.py
  
 Os dados são provenientes da **IRENA — International Renewable Energy Agency**, uma organização intergovernamental que apoia países na transição para energias renováveis.
  
-- 🔗 [IRENA Data & Statistics](https://www.irena.org/Publications/2025/Jul/Renewable-energy-statistics-2025)
+- 🔗 [Renewable Energy Statistics 2025](https://www.irena.org/Publications/2025/Jul/Renewable-energy-statistics-2025)
 - Formato: arquivos `.xlsx`
 - Cobertura: capacidade instalada e geração de energia renovável por país e por fonte (solar, eólica, hidroelétrica, etc.)
  
