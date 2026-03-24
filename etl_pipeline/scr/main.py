@@ -51,22 +51,22 @@ def run_pipeline():
         if not check_connection():
             raise ConnectionError("Não foi possível conectar ao banco de dados.")
 
-        logger.info("\n📥 ETAPA 1/6: EXTRAÇÃO")
+        logger.info("📥 ETAPA 1/6: EXTRAÇÃO")
         df = extract_data()
         if df is None or df.empty:
             raise ValueError("A extração retornou um DataFrame vazio ou None.") 
 
-        logger.info("\n📝 ETAPA 2/6: TRANSFORMAÇÕES TEXTUAIS")
+        logger.info("📝 ETAPA 2/6: TRANSFORMAÇÕES TEXTUAIS")
         df = normalize_text_columns(df)
         df = normalize_text_data(df)
         df = clean_text_data(df)
 
-        logger.info("\n🔢 ETAPA 3/6: TRANSFORMAÇÕES NUMÉRICAS")
+        logger.info("🔢 ETAPA 3/6: TRANSFORMAÇÕES NUMÉRICAS")
         df = clean_numeric_data(df)
         df = fill_nan_numeric_data(df)
         df = round_metrics(df)
 
-        logger.info("\n🔍 ETAPA 4/6: VALIDAÇÃO")
+        logger.info("🔍 ETAPA 4/6: VALIDAÇÃO")
         df = validate_columns(df)
         df = validate_registers_count(df)
         df = nulls_year_column(df)
@@ -75,11 +75,11 @@ def run_pipeline():
         df = generation_without_instaled_capacity(df)
         df = validate_composed_key(df)
     
-        logger.info("\n💾 ETAPA 5/6 SALVAMENTO DOS DADOS")
+        logger.info("💾 ETAPA 5/6 SALVAMENTO DOS DADOS")
         df.to_csv(DATA_PROCESSED_DIR / 'renewable_energy_data_final.csv', index=False)
         logger.info(f"✅ Arquivo final salvo em {DATA_PROCESSED_DIR}")
 
-        logger.info("\n💾 ETAPA 6/6 CARREGAMENTO DOS DADOS NO DATA WAREHOUSE")
+        logger.info("💾 ETAPA 6/6 CARREGAMENTO DOS DADOS NO DATA WAREHOUSE")
         load_data(df)
 
     except Exception as e:

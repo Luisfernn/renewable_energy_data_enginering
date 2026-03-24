@@ -46,7 +46,7 @@ def normalize_text_columns(df):
     logger.debug(f"\n{df.head(10)}\n")    
     logger.debug(f"\n{df.tail(10)}")
 
-    logger.info("\n✅ Normalização dos nomes de colunas concluida!")
+    logger.info("✅ Normalização dos nomes de colunas concluida!")
 
     return df
 
@@ -127,7 +127,7 @@ def normalize_text_data(df):
     logger.debug(f"\n{df.head(5)}\n")
     logger.debug(f"\n{df.tail(5)}")
 
-    logger.info("\n✅ Normalização de dados concluída!")
+    logger.info("✅ Normalização de dados concluída!")
 
                
     return df           
@@ -168,7 +168,7 @@ def clean_text_data(df):
     mask = df['country'].isin(invalid_country)
     count = mask.sum()
     if count > 0:
-        logger.info(f"⚠️  {count} registros com country inválido - removendo...")
+        logger.warning(f"⚠️  {count} registros com country inválido - removendo...")
         df = df[~mask]
         logger.info("✅ Remoção concluída!")
     else:
@@ -184,7 +184,7 @@ def clean_text_data(df):
     logger.debug(f"\n{df.head(5)}\n")
     logger.debug(f"\n{df.tail(5)}")
 
-    logger.info("\n✅ Limpeza de dados concluída!")
+    logger.info("✅ Limpeza de dados concluída!")
 
     return df 
 

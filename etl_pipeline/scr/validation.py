@@ -13,7 +13,7 @@ OUTPUT_PATH = DATA_PROCESSED_DIR / 'renewable_energy_data_validated.csv'
 
 def validate_columns(df):
 
-    logger.info("\nIniciando validação de colunas...")
+    logger.info("Iniciando validação de colunas...")
 
     expected_columns = [
         'region',
@@ -76,7 +76,7 @@ def validate_registers_count(df):
 
 def nulls_year_column(df):
 
-    logger.info("\nVerificando valores nulls na coluna year...")
+    logger.info("Verificando valores nulls na coluna year...")
 
     null = df['year'].isna().sum()
 
@@ -92,7 +92,7 @@ def nulls_year_column(df):
 
 def validate_regions(df):
 
-    logger.info("\nVerificando se há registros com região inválida...")
+    logger.info("Verificando se há registros com região inválida...")
 
     valid_regions = [
         'Africa',
@@ -117,7 +117,7 @@ def validate_regions(df):
 
 def validate_country_count(df):
 
-    logger.info("\nValidando contagem de países...")
+    logger.info("Validando contagem de países...")
 
     total_country = df['country'].nunique()
 
@@ -143,15 +143,15 @@ def generation_without_instaled_capacity(df):
 
 
     if len(gen_w_cap) > 0:
-        logger.warning(f"\n⚠️  {len(gen_w_cap)} Registros não tem capacidade de energia instalada onde tem geração energia!")
+        logger.warning(f"⚠️  {len(gen_w_cap)} Registros não tem capacidade de energia instalada onde tem geração energia!")
     else:
-        logger.info("\n✅ Tem capacidade de energia instalada onde tem geração de energia!")
+        logger.info("✅ Tem capacidade de energia instalada onde tem geração de energia!")
 
 
     if len(per_w_cap) > 0:
         logger.warning(f"⚠️  {len(per_w_cap)} Registros não tem capacidade de energia instalada onde tem capacidade de energia per capta!")
     else:
-        logger.info("\n✅ Tem capacidade de energia instalada onde tem capacidade de energia per capta!")
+        logger.info("✅ Tem capacidade de energia instalada onde tem capacidade de energia per capta!")
 
 
     return df
@@ -160,7 +160,7 @@ def generation_without_instaled_capacity(df):
 
 def validate_composed_key(df):
 
-    logger.info("\nVerificando se há duplicatas...")
+    logger.info("Verificando se há duplicatas...")
 
     key = ['country', 'year', 'technology', 'sub_technology', 'producer_type']
 

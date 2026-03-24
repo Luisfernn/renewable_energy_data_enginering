@@ -45,7 +45,7 @@ def check_connection():
     try:
         engine = get_engine()
         with engine.connect() as conn:
-            print("✅ Conexão com o Data Warehouse estabelecida com sucesso!")
+            logger.info("✅ Conexão com o Data Warehouse estabelecida com sucesso!")
             return True
     except OperationalError as e:
         logger.error("❌ ERRO: Não foi possível conectar ao banco de dados.")
