@@ -18,7 +18,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # 6. O comando que roda o ETL
-CMD ["python", "scr/main.py"]
+CMD ["python", "src/main.py"]
 
 # 7. Variável de ambiente para garantir que os logs sejam exibidos em tempo real
 ENV PYTHONUNBUFFERED=1

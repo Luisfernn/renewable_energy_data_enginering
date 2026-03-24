@@ -87,7 +87,7 @@ def load_fact(df, conn):
 
 def create_tables_from_sql(conn):
     """Garante que as tabelas existam antes de qualquer operação."""
-    # Se o load.py está em /app/scr/ e o sql em /app/
+    # Se o load.py está em /app/src/ e o sql em /app/
     sql_path = Path(__file__).parent.parent / 'sql' / 'create_tables.sql'
     
     if sql_path.exists():
