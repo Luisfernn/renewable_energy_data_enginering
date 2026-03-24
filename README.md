@@ -39,37 +39,26 @@ IRENA (fonte xlsx)
 ## 🗂️ Estrutura do Projeto
  
 ```
-renewable_energy_data_enginering/
-│
-├── etl_pipeline/
-│   ├── data/
-│   │   ├── logs/
-│   │   │   └── etl.log
-│   │   ├── processed/
-│   │   └── raw/
-│   ├── scr/
-│   │   ├── transform/
-│   │   │   ├── numeric.py
-│   │   │   └── text.py
-│   │   ├── extract.py
-│   │   ├── load.py
-│   │   ├── main.py
-│   │   └── validation.py
-│   ├── sql/
-│   │   └── create_tables.sql
-│   └── tests/
-│       ├── setup_db.py
-│       └── test_conection.py
-│
-├── .dockerignore
-├── .env
-├── .gitignore
-├── config.py
-├── docker-compose.yml
-├── Dockerfile
-├── LICENSE
-├── README.md
-└── requirements.txt
+├── data/                  # Armazenamento de arquivos locais
+│   ├── logs/              # Logs detalhados da execução do ETL
+│   ├── processed/         # Dados limpos e transformados (CSV)
+│   └── raw/               # Dados brutos originais (Extraídos da fonte)
+├── sql/                   # Script SQL para criação do Schema no PostgreSQL
+│   └── create_tables.sql  # Definição de tabelas Fato e Dimensões
+├── src/                   # Código-fonte do Pipeline (Core)
+│   ├── transform/         # Módulos específicos de transformação
+│   │   ├── numeric.py     # Tratamento de métricas e outliers
+│   │   └── text.py        # Padronização de strings e categorias
+│   ├── extract.py         # Lógica de ingestão e leitura de arquivos
+│   ├── load.py            # Carga no Data Warehouse (Star Schema)
+│   ├── main.py            # Orquestrador principal do fluxo ETL
+│   └── validation.py      # Camada de qualidade e integridade de dados
+├── tests/                 # Testes de integração
+├── .env                   # Variáveis de ambiente (Configurações sensíveis)
+├── config.py              # Centralização de caminhos e variáveis globais
+├── docker-compose.yml     # Orquestração dos containers (App + Database)
+├── Dockerfile             # Receita para build da imagem Python
+└── requirements.txt       # Dependências do projeto (Pandas, SQLAlchemy, etc.)
 ```
  
 ---
@@ -78,7 +67,7 @@ renewable_energy_data_enginering/
  
 | Categoria        | Tecnologia                              |
 |------------------|-----------------------------------------|
-| Linguagem        | Python 3.12.7                           |
+| Linguagem        | Python 3.11                             |
 | Manipulação      | Pandas, NumPy                           |
 | Leitura de dados | openpyxl                                |
 | Banco de dados   | PostgreSQL                              |
@@ -106,12 +95,14 @@ cd renewable_energy_data_enginering
  
 Crie um arquivo `.env` na raiz do projeto:
  
-```env
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=sua_senha
-POSTGRES_DB=renewable_energy
-POSTGRES_HOST=db
-POSTGRES_PORT=5432
+```# Configurações do Banco
+DB_NAME=renewable_energy
+DB_USER=postgres
+DB_PASS=sua_senha_forte
+
+# URLs de Conexão (Local vs Docker)
+DATABASE_URL=postgresql://postgres:sua_senha_forte@localhost:5433/renewable_energy
+DATABASE_URL_DOCKER=postgresql://postgres:sua_senha_forte@postgres:5432/renewable_energy
 ```
  
 ### 3. Suba o ambiente com Docker
@@ -126,7 +117,7 @@ O Docker irá subir o PostgreSQL e executar o pipeline automaticamente.
  
 ```bash
 pip install -r requirements.txt
-python etl_pipeline/main.py
+python src/main.py
 ```
  
 ---
@@ -152,6 +143,12 @@ Os dados são provenientes da **IRENA — International Renewable Energy Agency*
 - **`.gitignore` cuidadoso** — dados brutos e credenciais fora do repositório
  
 ---
+
+## 🚀 Destaques Técnicos
+- **Star Schema:** Modelagem dimensional com tabelas Fato (`fact_energy_generation`) e Dimensões (`dim_country`, `dim_technology`, etc).
+- **Atomicidade:** Carga realizada dentro de transações SQL (All-or-Nothing).
+- **Idempotência:** O pipeline limpa dados antigos e reinicia as sequences antes de cada carga, permitindo múltiplas execuções sem duplicidade.
+- **Ambiente Híbrido:** Lógica de `get_engine()` que detecta automaticamente se o código está rodando dentro ou fora do Docker.
  
 ## 📄 Licença
  
